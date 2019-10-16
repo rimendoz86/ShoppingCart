@@ -37,3 +37,10 @@ function DomRef(id){
         this.nativeElementRef.style.left = `${left}px`;
     }
 }
+
+function DataService(){
+    this.Products = [
+    {"ID": 0, "Name": "Product1", "Description": "This is the first product", "Image": "product0.jpg"},
+    {"ID": 1, "Name": "Product2", "Description": "This is the second product", "Image": "product1.jpg"},
+    {"ID": 2, "Name": "Product3", "Description": "This is the third product", "Image": "product2.jpg"}]
+}

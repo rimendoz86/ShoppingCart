@@ -1,7 +1,6 @@
 function bindingClass (controllerRef){
     this.ControllerRef = controllerRef;
     this.ConfigureKeyBindings();
-    this.MouseTracking();
     this.SetGlobalTimer();
     this.TimerActions = [
         new TimerAction()
@@ -32,13 +31,6 @@ bindingClass.prototype.ConfigureKeyBindings = function(){
             binding.KeyUp(); 
         });
     });
-}
-
-bindingClass.prototype.MouseTracking = function(){
-    // var playArea = new DomRef('playArea');
-    // playArea.nativeElementRef.addEventListener("mousemove" , (e) => {
-    //     this.ControllerRef.SetMousePosition(e.layerY, e.layerX)
-    // });
 }
 
 bindingClass.prototype.SetGlobalTimer = function(){
