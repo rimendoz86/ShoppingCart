@@ -1,38 +1,75 @@
+body, html{
+    margin: 0px; 
+    padding: 0px;
+    color: black;
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+}
+
 .container{
     width: 100%;
     max-width: 1280px;
-    background-color: red;
     margin: auto;
 }
 
 .row{
     display: block;
-    padding: 5px 15px;
-    background-color: gray;
     white-space: nowrap;
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+.col-100, .col-25, .col-50, .col-75 {
+    display: inline-block;
 }
 
 .col-100{
-    display: inline-block;
     width: 100%;
 }
 
 .col-25{
-    display: inline-block;
     width: 25%;
 }
 
 .col-50{
-    display: inline-block;
     width: 50%;
 }
 
 .col-75{
-    display: inline-block;
     width: 75%;
 }
 
+.nav {
+    background-color: #ff0000;
+    padding: 5px 0px;
+    margin-left: -15px;
+    margin-right: -15px;
+    padding-right: 15px;
+    display: flex;
+}
+.nav a {
+    text-decoration: none;
+    color: white;
+} 
 
+.nav ul{
+    list-style-type:none;
+}
 
+.nav ul.navSectionRight{
+    list-style-type:none;
+    margin-left: auto;
+}
 
+.nav-inline ul li{
+    padding: 5px;
+}
 
+.nav-inline ul li {
+    display: inline-block;
+}
+
+.siteTitle{
+    display: inline-flex;
+    justify-content: flex-start;
+    padding: 15px;
+}
