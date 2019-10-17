@@ -1,0 +1,38 @@
+.container{
+    width: 100%;
+    max-width: 1280px;
+    background-color: red;
+    margin: auto;
+}
+
+.row{
+    display: block;
+    padding: 5px 15px;
+    background-color: gray;
+    white-space: nowrap;
+}
+
+.col-100{
+    display: inline-block;
+    width: 100%;
+}
+
+.col-25{
+    display: inline-block;
+    width: 25%;
+}
+
+.col-50{
+    display: inline-block;
+    width: 50%;
+}
+
+.col-75{
+    display: inline-block;
+    width: 75%;
+}
+
+
+
+
+
