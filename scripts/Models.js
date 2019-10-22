@@ -1,3 +1,22 @@
+function Product() {
+    this.ID;
+    this.Name;
+    this.Description;
+    this.ImageRef;
+}
+
+function SelectedProduct(){
+    this.Quantity;
+    this.Product;
+}
+
+function Cart(){
+    this.User;
+    this.SelectedProducts = [];
+}
+
+function User(){}
+
 function TimerAction(action = () => {return}, runEvery = 5, runMax = 15){
     this.Action = action;
     this.RunEvery = runEvery;
@@ -38,9 +57,10 @@ function DomRef(id){
     }
 }
 
-function DataService(){
-    this.Products = [
-    {"ID": 0, "Name": "Product1", "Description": "This is the first product", "Image": "product0.jpg"},
-    {"ID": 1, "Name": "Product2", "Description": "This is the second product", "Image": "product1.jpg"},
-    {"ID": 2, "Name": "Product3", "Description": "This is the third product", "Image": "product2.jpg"}]
+var DataService = {
+    getProducts: () => { 
+        return [
+    {"ID": 0, "Name": "Product1", "Description": "This is the first product", "ImageRef": "product0.jpg"},
+    {"ID": 1, "Name": "Product2", "Description": "This is the second product", "ImageRef": "product1.jpg"},
+    {"ID": 2, "Name": "Product3", "Description": "This is the third product", "ImageRef": "product2.jpg"}]}
 }
