@@ -1,8 +1,9 @@
-function Product() {
-    this.ID;
-    this.Name;
-    this.Description;
-    this.ImageRef;
+
+function Product(id, name, description, imageRef) {
+    this.ID = id;
+    this.Name = name;
+    this.Description = description;
+    this.ImageRef = imageRef;
 }
 
 function SelectedProduct(){
@@ -55,12 +56,48 @@ function DomRef(id){
         this.nativeElementRef.style.top = `${top}px`;
         this.nativeElementRef.style.left = `${left}px`;
     }
+
+    this.AppendChild = function(htmlNode){
+        this.nativeElementRef.appendChild(htmlNode);
+    }
 }
 
-var DataService = {
-    getProducts: () => { 
-        return [
-    {"ID": 0, "Name": "Product1", "Description": "This is the first product", "ImageRef": "product0.jpg"},
-    {"ID": 1, "Name": "Product2", "Description": "This is the second product", "ImageRef": "product1.jpg"},
-    {"ID": 2, "Name": "Product3", "Description": "This is the third product", "ImageRef": "product2.jpg"}]}
+var Data = {
+    Get: (controller, params = '') => {
+        let promise = new Promise((resolve, reject) => {
+            let BaseURL = "\\_API\\Controllers\\";
+            let req = new XMLHttpRequest;
+            req.open("GET",BaseURL+controller+"?"+params,true);
+            req.setRequestHeader("Content-type", "application/json");
+            req.onreadystatechange = (event) => {
+                let res = event.currentTarget;
+                if(res.readyState == 4 && res.status == 200){
+                    resolve(JSON.parse(res.responseText));
+                }else if (res.readyState == 4 && res.status != 200){
+                    reject(event);
+                }
+            }
+            req.send();
+        })
+        return promise;
+    },
+    Post: (controller, params) => {
+        let promise = new Promise((resolve, reject) => {
+            let BaseURL = "\\_API\\Controllers\\";
+            let req = new XMLHttpRequest;
+            req.open("POST",BaseURL+controller,true);
+            req.setRequestHeader("Content-Type", "application/json");
+            req.onreadystatechange = (event) => {
+                let res = event.currentTarget;
+                if(res.readyState == 4 && res.status == 200){
+                    resolve(JSON.parse(res.responseText));
+                }else if (res.readyState == 4 && res.status != 200){
+                    reject(event);
+                }
+            }
+            let paramsJson = JSON.stringify(params);
+            req.send(paramsJson);
+        })
+        return promise;
+    }
 }
