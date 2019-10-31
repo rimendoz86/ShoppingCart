@@ -6,9 +6,9 @@ function Product(id, name, description, imageRef) {
     this.ImageRef = imageRef;
 }
 
-function SelectedProduct(){
-    this.Quantity;
-    this.Product;
+function SelectedProduct(quantity, productModel){
+    this.Quantity = quantity;
+    this.Product = productModel;
 }
 
 function Cart(){
@@ -59,6 +59,20 @@ function DomRef(id){
 
     this.AppendChild = function(htmlNode){
         this.nativeElementRef.appendChild(htmlNode);
+    }
+}
+
+var LocalStorage = {
+    ShoppingCart: {
+        get: () => {
+            return JSON.parse(localStorage.getItem('ShoppingCart'));
+        },
+        set: (shoppingCart) => {
+            localStorage.setItem('ShoppingCart',JSON.stringify(shoppingCart));
+        },
+        clear: () => {
+            localStorage.removeItem('ShoppingCart');
+        }
     }
 }
 

@@ -36,10 +36,21 @@
                 </table>
             </div>
             <div class="col-25">
-                <h3>Shopping Cart</h3>
+                <div class="row">
+                    <div class="col">
+                            <h3>Shopping Cart</h3>
+                            <table id="shoppingCartTable">
+                            </table>
+                    </div>
+                </div>
+                <div id="orderButtonContainer" class="row hide">
+                    <div class="col">
+                        <span class='btn btn-primary float-right' onclick='GlobalControllerRef.PlaceOrder()'>Place Order</span>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="row">
+        <div class="row footer">
             <div class="col-100">
                 <footer>
                     &copy;2019 Ricardo Mendoza 
@@ -50,3 +61,5 @@
 </body>
 <script src="scripts/App.js"></script>
 </html>
+
+    
