@@ -1,5 +1,5 @@
 function modelClass (){
     this.View = new viewClass();
     this.Products = [];
-    this.ShoppingCart = [];
+    this.ShoppingCart = new Cart();
 }

@@ -19,7 +19,7 @@
                 <nav class="nav nav-inline">
                     <ul>
                         <li>
-                            <a href="#">Home</a>
+                            <a href="#">Fruit Central</a>
                         </li>
                     </ul>
                     <ul class="navSectionRight">
@@ -30,12 +30,12 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-75">
+            <div class="col-62">
                 <h3>Products</h3>
                 <table id="productsTable">
                 </table>
             </div>
-            <div class="col-25">
+            <div class="col-37">
                 <div class="row">
                     <div class="col">
                             <h3>Shopping Cart</h3>
@@ -45,9 +45,27 @@
                 </div>
                 <div id="orderButtonContainer" class="row hide">
                     <div class="col">
-                        <span class='btn btn-primary float-right' onclick='GlobalControllerRef.PlaceOrder()'>Place Order</span>
+                        <span class='btn btn-light' onclick='GlobalControllerRef.EmptyCart()'>Empty Cart</span>
                     </div>
                 </div>
+                <div id="orderFormContainer" class="row">
+                        <div class="col">
+                            <h3>Order Details</h3>
+                            <table id="pricingTable">
+                            </table>
+                            <form onsubmit="event.preventDefault();GlobalControllerRef.SubmitOrder();">
+                                <input type="text" name="Name" placeholder="Name" id="orderName">
+                                <input type="email" name="Email" placeHolder="Email" id="orderEmail">
+                                <select name="shipping" placeholder="Shipping" id="orderShipping" onchange="GlobalControllerRef.UpdateShipping(event)">
+                                    <option value="0">No Rush (Free)</option>
+                                    <option value="1">2-Day (5.99)</option>
+                                    <option value="2">Overnight (10.99)</option>
+                                </select>
+                                <br>
+                                <input class="btn btn-primary float-right" type="submit" value="Order Now">
+                            </form>
+                        </div>
+                    </div>
             </div>
         </div>
         <div class="row footer">

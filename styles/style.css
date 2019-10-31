@@ -36,8 +36,16 @@ body, html{
     width: 25%;
 }
 
+.col-37{
+    width: 37.5%;
+}
+
 .col-50{
     width: 50%;
+}
+
+.col-62{
+    width: 62.5%;
 }
 
 .col-75{
@@ -121,6 +129,16 @@ table td, table th{
     max-height: auto;
 }
 
+input, select {
+    display: flex;
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid lightGray;
+    padding: 5px;
+    margin: 5px 1px;
+    font-size: 16px;
+}
+
 .btn{
     display: inline-block;
     background-color: #5a6268;
@@ -130,11 +148,12 @@ table td, table th{
     cursor: pointer;
     margin: 5px;
     font-weight: lighter;
+    border: 1px solid lightgray;
+    width: auto;
     -webkit-user-select: none; 
     -moz-user-select: none;
     -khtml-user-select: none; 
     -ms-user-select: none; 
-
 }
 
 .btn.btn-primary{

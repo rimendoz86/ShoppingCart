@@ -1,9 +1,10 @@
 
-function Product(id, name, description, imageRef) {
+function Product(id, name, description, imageRef, price) {
     this.ID = id;
     this.Name = name;
     this.Description = description;
     this.ImageRef = imageRef;
+    this.Price = price;
 }
 
 function SelectedProduct(quantity, productModel){
@@ -11,9 +12,23 @@ function SelectedProduct(quantity, productModel){
     this.Product = productModel;
 }
 
-function Cart(){
-    this.User;
-    this.SelectedProducts = [];
+function Cart(selectedProducts = [], shipping = 0){
+    this.SelectedProducts = selectedProducts;
+    this.Shipping = Picklists.ShippingTypes[0];
+    this.getSubtotal = () => {
+        let runningTotal = 0;
+        this.SelectedProducts.forEach( prod => {
+            runningTotal += (prod.Product.Price * prod.Quantity)
+        });
+        return parseFloat(runningTotal.toFixed(2));
+    };
+    this.getTax = () => {
+        let tax = this.getSubtotal() * .0775;
+        return parseFloat(tax.toFixed(2));
+    };
+    this.getTotal = () => {
+        return this.getSubtotal() + this.getTax() + this.Shipping.Price;
+    }
 }
 
 function User(){}
@@ -60,8 +75,17 @@ function DomRef(id){
     this.AppendChild = function(htmlNode){
         this.nativeElementRef.appendChild(htmlNode);
     }
+
+    this.Show = function (isShow) {
+        if (isShow) {
+            this.ReplaceClass("hide", null);
+        } else {
+            this.ReplaceClass(null, "hide");
+        }
+    }  
 }
 
+//Static Methods
 var LocalStorage = {
     ShoppingCart: {
         get: () => {
@@ -76,12 +100,21 @@ var LocalStorage = {
     }
 }
 
+var Picklists = {
+    ShippingTypes: [
+        {ID: 0, Type:"No Rush", Price: 0},
+        {ID: 1, Type:"2-Day", Price: 5.99},
+        {ID: 2, Type:"Overnight", Price: 10.99}
+    ]
+}
+
+
 var Data = {
     Get: (controller, params = '') => {
         let promise = new Promise((resolve, reject) => {
             let BaseURL = "\\_API\\Controllers\\";
             let req = new XMLHttpRequest;
-            req.open("GET",BaseURL+controller+"?"+params,true);
+            req.open("GET",BaseURL+controller+".php?"+params,true);
             req.setRequestHeader("Content-type", "application/json");
             req.onreadystatechange = (event) => {
                 let res = event.currentTarget;
@@ -99,7 +132,7 @@ var Data = {
         let promise = new Promise((resolve, reject) => {
             let BaseURL = "\\_API\\Controllers\\";
             let req = new XMLHttpRequest;
-            req.open("POST",BaseURL+controller,true);
+            req.open("POST",BaseURL+controller+".php",true);
             req.setRequestHeader("Content-Type", "application/json");
             req.onreadystatechange = (event) => {
                 let res = event.currentTarget;

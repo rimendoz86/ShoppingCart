@@ -1,12 +1,14 @@
-function viewClass (){
+function viewClass() {
     window.GlobalViewRef = this;
     this.ProductsTable = new DomRef('productsTable');
     this.ShoppingCartTable = new DomRef('shoppingCartTable');
     this.OrderButton = new DomRef('orderButtonContainer');
+    this.PricingTable = new DomRef('pricingTable')
+    this.OrderFormContainer = new DomRef('orderFormContainer');
 };
 
-viewClass.prototype.PopulateProductsTable = function (modelProducts){
-    let tableContent = `<thead><tr><th>Image</th><th>Name</th><th>Description</th><th></th></tr></thead>
+viewClass.prototype.PopulateProductsTable = function (modelProducts) {
+    let tableContent = `<thead><tr><th>Image</th><th>Name</th><th>Description</th><th>Price</th><th></th></tr></thead>
                         <tbody>`;
     modelProducts.forEach(prod => {
         tableContent += `
@@ -14,6 +16,7 @@ viewClass.prototype.PopulateProductsTable = function (modelProducts){
             <td><img src="\\assets\\${prod.ImageRef}" /></td>
             <td>${prod.Name}</td>
             <td>${prod.Description}</td>
+            <td>$${prod.Price}</td>
             <td><span class="btn btn-primary" onclick="GlobalControllerRef.AddItemToCart(${prod.ID},1)">Add</span></td>
         </tr>
         `
@@ -22,32 +25,40 @@ viewClass.prototype.PopulateProductsTable = function (modelProducts){
     this.ProductsTable.SetInnerHTML(tableContent);
 }
 
-viewClass.prototype.PopulateShoppingCartTable = function (modelProducts){
-    let tableContent = `<thead><tr><th>Image</th><th>Name</th><th>Quantity</th><th></th></tr></thead>
+viewClass.prototype.PopulateShoppingCartTable = function (cart) {
+    let tableContent = `<thead><tr><th>Image</th><th>Name</th><th>Quantity</th><th>Price</th><th></th></tr></thead>
                         <tbody>`;
-    let hasValue =  modelProducts && modelProducts.length > 0;
+    let hasValue = cart.SelectedProducts && cart.SelectedProducts.length > 0;
     if (!hasValue) {
         tableContent += `<tr><td colspan="4">Your cart is empty.</td></tr>`
     } else {
-        modelProducts.forEach(cartItem => {
-        tableContent += `
+        cart.SelectedProducts.forEach(cartItem => {
+            tableContent += `
         <tr>
             <td><img src="\\assets\\${cartItem.Product.ImageRef}" /></td>
             <td>${cartItem.Product.Name}</td>
             <td>${cartItem.Quantity}</td>
+            <td>$${cartItem.Quantity * cartItem.Product.Price}</td>
             <td><span class="btn btn-light" onclick="GlobalControllerRef.AddItemToCart(${cartItem.Product.ID}, -1)">Remove</span></td>
         </tr>
         `});
     }
     tableContent += "</tbody>"
     this.ShoppingCartTable.SetInnerHTML(tableContent);
-    this.ShowOrderButton(hasValue);
+    this.OrderButton.Show(hasValue);
+    this.OrderFormContainer.Show(hasValue);
 }
 
-viewClass.prototype.ShowOrderButton = function(isShow){
-    if (isShow){
-        this.OrderButton.ReplaceClass("hide",null);
-    }else{
-        this.OrderButton.ReplaceClass(null,"hide");
-    }
-}  
+viewClass.prototype.PopulatePricingTable = function (cart) {
+    let tableContent = `<tbody>`;
+    let hasValue = cart.SelectedProducts && cart.SelectedProducts.length > 0;
+    if (hasValue) {
+        tableContent += `
+        <tr><td>Sub Total</td><td>$${ cart.getSubtotal().toFixed(2) }</td></tr>
+        <tr><td>Tax</td><td>$${ cart.getTax().toFixed(2) }</td></tr>
+        <tr><td>Shipping</td><td>$${ cart.Shipping.Price.toFixed(2) }</td></tr>
+        <tr><td>Grand Total</td><td>$${ cart.getTotal().toFixed(2) }</td></tr>
+        `}
+    tableContent += "</tbody>"
+    this.PricingTable.SetInnerHTML(tableContent);
+}
