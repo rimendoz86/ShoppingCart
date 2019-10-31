@@ -13,6 +13,9 @@ function SelectedProduct(quantity, productModel){
 }
 
 function Cart(selectedProducts = [], shipping = 0){
+    this.CustomerName = "Ricardo Mendoza";
+    this.CustomerEmail = "ricardo@mendoza.com";
+    this.CustomerAddress = "25151 Gerbana St, Moreno valley CA 92551";
     this.SelectedProducts = selectedProducts;
     this.Shipping = Picklists.ShippingTypes[0];
     this.getSubtotal = () => {

@@ -54,8 +54,9 @@
                             <table id="pricingTable">
                             </table>
                             <form onsubmit="event.preventDefault();GlobalControllerRef.SubmitOrder();">
-                                <input type="text" name="Name" placeholder="Name" id="orderName">
-                                <input type="email" name="Email" placeHolder="Email" id="orderEmail">
+                                <input type="text" name="Name" placeholder="Name" id="customerName">
+                                <input type="email" name="Email" placeHolder="Email" id="customerEmail">
+                                <textarea name="address" placeholder="Full Address" id="customerAddress" cols="1" rows="4"></textarea>
                                 <select name="shipping" placeholder="Shipping" id="orderShipping" onchange="GlobalControllerRef.UpdateShipping(event)">
                                     <option value="0">No Rush (Free)</option>
                                     <option value="1">2-Day (5.99)</option>
