@@ -12,10 +12,10 @@ function SelectedProduct(quantity, productModel){
     this.Product = productModel;
 }
 
-function Cart(selectedProducts = [], shipping = 0){
-    this.CustomerName = "Ricardo Mendoza";
-    this.CustomerEmail = "ricardo@mendoza.com";
-    this.CustomerAddress = "25151 Gerbana St, Moreno valley CA 92551";
+function Cart(selectedProducts = [], shipping = 0, customerName = '', customerEmail = '', customerAddress = ''){
+    this.CustomerName = customerName;
+    this.CustomerEmail = customerEmail;
+    this.CustomerAddress = customerAddress;
     this.SelectedProducts = selectedProducts;
     this.Shipping = Picklists.ShippingTypes[0];
     this.getSubtotal = () => {
@@ -59,6 +59,10 @@ function DomRef(id){
     
     this.SetInnerHTML = function(innerHTML){
         this.nativeElementRef.innerHTML = innerHTML;
+    }
+
+    this.SetValue = function(value){
+        this.nativeElementRef.value = value;
     }
 
     this.ReplaceClass = function(removeClass, addClass){

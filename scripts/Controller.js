@@ -11,8 +11,17 @@ function controllerClass (){
 controllerClass.prototype.InitializeShoppingCart = function(){
     let localCart = LocalStorage.ShoppingCart.get();
     this.Model.ShoppingCart = localCart 
-                            ? new Cart(localCart.SelectedProducts,localCart.Shipping)
+                            ? new Cart(localCart.SelectedProducts,
+                                localCart.Shipping, 
+                                localCart.CustomerName, 
+                                localCart.CustomerEmail, 
+                                localCart.CustomerAddress)
                             : new Cart();
+
+    GlobalViewRef.InitializeForm(localCart.CustomerName, 
+                                localCart.CustomerEmail, 
+                                localCart.CustomerAddress,
+                                localCart.Shipping.ID)
 }
 
 controllerClass.prototype.PopulateProductsTable = function () {
@@ -66,4 +75,18 @@ controllerClass.prototype.UpdateShipping = function(event){
         this.Model.ShoppingCart.Shipping = shipping;
         this.PopulatePricingTable();
     }
+}
+
+controllerClass.prototype.orderformUpdate = function(event) {
+    if (event.target.id == "orderShipping"){
+        this.UpdateShipping(event);
+    }else{
+        this.Model.ShoppingCart[event.target.id] = event.target.value;
+    }
+    LocalStorage.ShoppingCart.set(this.Model.ShoppingCart);
+
+}
+
+controllerClass.prototype.SubmitOrder = function(){
+    console.log(this.Model.ShoppingCart)
 }

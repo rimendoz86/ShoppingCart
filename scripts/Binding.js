@@ -1,43 +1,22 @@
 function bindingClass (controllerRef){
     this.ControllerRef = controllerRef;
-    this.ConfigureKeyBindings();
-    this.SetGlobalTimer();
-    this.TimerActions = [
-        new TimerAction()
-    ];
-
     window.GlobalBindingRef = this;
+    this.RegisterOrderForm();
+
 };
 
-bindingClass.prototype.KeyBindings = []
+bindingClass.prototype.RegisterOrderForm = function() {
+    let orderForm = new DomRef('orderForm');
 
-bindingClass.prototype.ConfigureKeyBindings = function(){
-    window.addEventListener("keydown", (event) => {
-        let bindings = this.KeyBindings.filter(x => x.KeyCode == event.code);
-        bindings.forEach((binding) => {
-            binding.KeyDown();
-        });
+    orderForm.nativeElementRef.addEventListener("keydown", (event) => {
+        this.ControllerRef.orderformUpdate(event);
     });
 
-    window.addEventListener("keyup", (event) => {
-        let bindings = this.KeyBindings.filter(x => x.KeyCode == event.code);
-        bindings.forEach((binding) => { 
-            binding.KeyUp(); 
-        });
+    orderForm.nativeElementRef.addEventListener("change", (event) => {
+        this.ControllerRef.orderformUpdate(event);
     });
-}
 
-bindingClass.prototype.SetGlobalTimer = function(){
-    var _globalTimer = setInterval(() => {
-
-        this.TimerActions.forEach((timerAction) => {
-            if(( timerAction.Iteration % timerAction.RunEvery) == 0)  
-                timerAction.Action();
-
-            timerAction.Iteration += 1; 
-            if (timerAction.Iteration > timerAction.RunMax) timerAction.Dispose = true;
-        });
-
-        this.TimerActions = this.TimerActions.filter(x => x.Dispose == false);
-    }, 1000);
+    orderForm.nativeElementRef.addEventListener("submit", (event) => {
+        event.preventDefault();GlobalControllerRef.SubmitOrder();
+    });
 }

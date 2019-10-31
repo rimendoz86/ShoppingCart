@@ -22,6 +22,7 @@ class User extends Data\Connection{
         (`ID`,`UserName`,`ReturnKey`,`CreatedOn`,`CreatedBy`,`UpdatedOn`,`UpdatedBy`)
         VALUES 
         (NULL, ?, ?, current_timestamp(),'TestUser', current_timestamp(),'TestUser');");
+        
         if($stmt == false){
             var_dump($this->Conn->error_list);
             return "['Statement Failed']";

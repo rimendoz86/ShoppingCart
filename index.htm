@@ -53,11 +53,11 @@
                             <h3>Order Details</h3>
                             <table id="pricingTable">
                             </table>
-                            <form onsubmit="event.preventDefault();GlobalControllerRef.SubmitOrder();">
-                                <input type="text" name="Name" placeholder="Name" id="customerName">
-                                <input type="email" name="Email" placeHolder="Email" id="customerEmail">
-                                <textarea name="address" placeholder="Full Address" id="customerAddress" cols="1" rows="4"></textarea>
-                                <select name="shipping" placeholder="Shipping" id="orderShipping" onchange="GlobalControllerRef.UpdateShipping(event)">
+                            <form id="orderForm">
+                                <input type="text" name="Name" placeholder="Name" id="CustomerName">
+                                <input type="email" name="Email" placeHolder="Email" id="CustomerEmail">
+                                <textarea name="address" placeholder="Full Address" id="CustomerAddress" cols="1" rows="4"></textarea>
+                                <select name="shipping" placeholder="Shipping" id="orderShipping">
                                     <option value="0">No Rush (Free)</option>
                                     <option value="1">2-Day (5.99)</option>
                                     <option value="2">Overnight (10.99)</option>

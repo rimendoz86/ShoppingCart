@@ -62,3 +62,10 @@ viewClass.prototype.PopulatePricingTable = function (cart) {
     tableContent += "</tbody>"
     this.PricingTable.SetInnerHTML(tableContent);
 }
+
+viewClass.prototype.InitializeForm = function(customerName, customerEmail, customerAddress, shippingID){
+    new DomRef('CustomerName').SetValue(customerName);
+    new DomRef('CustomerEmail').SetValue(customerEmail);
+    new DomRef('CustomerAddress').SetInnerHTML(customerAddress);
+    new DomRef('orderShipping').SetValue(shippingID);
+} 
