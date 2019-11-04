@@ -17,7 +17,7 @@ function Cart(selectedProducts = [], shipping = 0, customerName = '', customerEm
     this.CustomerEmail = customerEmail;
     this.CustomerAddress = customerAddress;
     this.SelectedProducts = selectedProducts;
-    this.Shipping = Picklists.ShippingTypes[0];
+    this.Shipping = Picklists.ShippingTypes[shipping.ID];
     this.getSubtotal = () => {
         let runningTotal = 0;
         this.SelectedProducts.forEach( prod => {
@@ -33,8 +33,6 @@ function Cart(selectedProducts = [], shipping = 0, customerName = '', customerEm
         return this.getSubtotal() + this.getTax() + this.Shipping.Price;
     }
 }
-
-function User(){}
 
 function TimerAction(action = () => {return}, runEvery = 5, runMax = 15){
     this.Action = action;

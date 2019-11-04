@@ -38,7 +38,7 @@ viewClass.prototype.PopulateShoppingCartTable = function (cart) {
             <td><img src="\\assets\\${cartItem.Product.ImageRef}" /></td>
             <td>${cartItem.Product.Name}</td>
             <td>${cartItem.Quantity}</td>
-            <td>$${cartItem.Quantity * cartItem.Product.Price}</td>
+            <td>$${(cartItem.Quantity * cartItem.Product.Price).toFixed(2)}</td>
             <td><span class="btn btn-light" onclick="GlobalControllerRef.AddItemToCart(${cartItem.Product.ID}, -1)">Remove</span></td>
         </tr>
         `});

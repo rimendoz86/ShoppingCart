@@ -1,8 +1,8 @@
 function bindingClass (controllerRef){
     this.ControllerRef = controllerRef;
-    window.GlobalBindingRef = this;
     this.RegisterOrderForm();
-
+    
+    window.GlobalBindingRef = this;
 };
 
 bindingClass.prototype.RegisterOrderForm = function() {

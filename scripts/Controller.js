@@ -1,27 +1,28 @@
 function controllerClass (){
     this.Model = new modelClass();
     window.GlobalControllerRef = this;
-    this.InitializeShoppingCart();
+    this.Model.ShoppingCart = this.InitializeShoppingCart();
     this.PopulateProductsTable();
     this.PopulateShoppingCartTable();
     this.PopulatePricingTable();
-
-};
+}
 
 controllerClass.prototype.InitializeShoppingCart = function(){
     let localCart = LocalStorage.ShoppingCart.get();
-    this.Model.ShoppingCart = localCart 
-                            ? new Cart(localCart.SelectedProducts,
-                                localCart.Shipping, 
-                                localCart.CustomerName, 
-                                localCart.CustomerEmail, 
-                                localCart.CustomerAddress)
-                            : new Cart();
+    if (localCart) {
+        GlobalViewRef.InitializeForm(localCart.CustomerName, 
+                                    localCart.CustomerEmail, 
+                                    localCart.CustomerAddress, 
+                                    localCart.Shipping.ID);
 
-    GlobalViewRef.InitializeForm(localCart.CustomerName, 
-                                localCart.CustomerEmail, 
-                                localCart.CustomerAddress,
-                                localCart.Shipping.ID)
+        return cart = new Cart(localCart.SelectedProducts,
+                            localCart.Shipping, 
+                            localCart.CustomerName, 
+                            localCart.CustomerEmail, 
+                            localCart.CustomerAddress);
+    }else{
+       return  cart = new Cart();
+    }
 }
 
 controllerClass.prototype.PopulateProductsTable = function () {
