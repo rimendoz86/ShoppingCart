@@ -7,10 +7,15 @@ header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 
 class APIBase {
-    
+    public $ResponseMessage;
     function __construct(){
         $RequestMethod = $_SERVER['REQUEST_METHOD'];
         $RequestObject;
+
+        $this->ResponseMessage = new \ stdClass();;
+        $this->ResponseMessage->ValidationMessages = null;
+        $this->ResponseMessage->Result = null;
+        
         switch ($RequestMethod) {
             case 'GET':
                 $RequestObject = (object) $_GET;
@@ -23,6 +28,9 @@ class APIBase {
             case 'PUT':
                 $RequestObject = json_decode(file_get_contents('php://input'), true);
                 $this->Put($RequestObject);
+            case 'DELETE':
+                $RequestObject = json_decode(file_get_contents('php://input'), true);
+                $this->Delete($RequestObject);
             break;
             default:
                 break;
@@ -30,15 +38,21 @@ class APIBase {
     }
 
     function Post($requestObject){
-        echo json_encode($requestObject);
+        echo json_encode($this->ResponseMessage);
     }
-
     function Put($requestObject){
-        echo json_encode($requestObject);
+        echo json_encode($this->ResponseMessage);
     }
-
+    function Delete($requestObject){
+        echo json_encode($this->ResponseMessage);
+    }
     function Get($requestObject){
-        echo json_encode($requestObject);
+        echo json_encode($this->ResponseMessage);
+    }
+    function Response($responseCode){
+        http_response_code($responseCode);
+        echo json_encode($this->ResponseMessage);
+        die();
     }
 }
 ?>

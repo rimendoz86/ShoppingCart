@@ -74,7 +74,7 @@ body, html{
     display: flex;
 }
 
-.nav a {
+.nav a , .nav span {
     text-decoration: none;
     color: white;
 } 
@@ -173,6 +173,12 @@ input, select, textarea {
 
 .hide {
     display:none !important;
+}
+
+.horizontalForm{
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
 }
 
 .float-right{

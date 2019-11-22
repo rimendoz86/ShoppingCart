@@ -6,6 +6,11 @@ function Product(id, name, description, imageRef, price) {
     this.ImageRef = imageRef;
     this.Price = price;
 }
+class Authentication {
+    UserID;
+    Login;
+    Password;
+}
 
 function SelectedProduct(quantity, productModel){
     this.Quantity = quantity;
