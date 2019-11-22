@@ -27,7 +27,8 @@ controllerClass.prototype.InitializeShoppingCart = function(){
 
 controllerClass.prototype.PopulateProductsTable = function () {
     this.Model.Products = [];
-    Data.Get("Product").then((productList) => {
+    Data.Get("Product").then((res) => {
+        let productList = res.Result;
         productList.forEach(prod => {
             let newProduct = new Product(prod.ID, 
                                         prod.Name, 

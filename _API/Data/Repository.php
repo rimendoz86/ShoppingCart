@@ -3,15 +3,12 @@ namespace Data\Repository;
 include 'Connection.php';
 use Data;
 
-class Score extends Data\Connection{
-
-    function Save(){
-        
-        return 1;
-    } 
-
+class Product extends Data\Connection{
     function Get(){
-        return "[{'id':'0', 'name':'Superman','Score':'1000'}]";
+        return $this->dbSelect("
+        Select ID, Name, Description, ImageRef, Price
+        FROM Product
+        Where IsActive = 1");
     }
 }
 
@@ -28,7 +25,6 @@ class User extends Data\Connection{
             return "['Statement Failed']";
             
         }
-
         $stmt->bind_param("ss", $userName, $returnKey);
         $stmt->execute();
         $stmt->close();

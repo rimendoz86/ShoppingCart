@@ -1,7 +1,9 @@
 <?php
 namespace API;
 include_once '../APIBase.php';
+include_once '../Data/Repository.php';
 use API;
+use Data\Repository;
 
 class Product extends API\APIBase{
     function Get($req){
@@ -10,17 +12,9 @@ class Product extends API\APIBase{
         //Logic: call to method in data layer. map to response
 
         //Response: return response
-        $result = '[{"ID":0,"Name":"Apple","Description":"An Apple a day keeps the doctor away.","ImageRef":"apple.jpg","Price":1.89},{"ID":1,"Name":"Banana","Description":"Monkeys love bananas but they are good for humans too.","ImageRef":"banana.jpg","Price":1.78},{"ID":2,"Name":"Orange","Description":"Orange is the only food that shares its name with its color","ImageRef":"orange.jpg","Price":2.09}]';
-        echo $result;
-    }
-
-    function Post($req){
-        //Validation: Ensure request has required params
-
-        //Logic: call to method in data layer. map to response
-
-        //Response: return response
-        echo json_encode($req);
+        $repository = new Repository\Product();
+        $this->Response->Result = $repository->Get();
+        $this->SendResponse(200);
     }
 }
 new Product();

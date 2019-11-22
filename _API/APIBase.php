@@ -7,14 +7,14 @@ header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 
 class APIBase {
-    public $ResponseMessage;
+    public $Response;
     function __construct(){
         $RequestMethod = $_SERVER['REQUEST_METHOD'];
         $RequestObject;
 
-        $this->ResponseMessage = new \ stdClass();;
-        $this->ResponseMessage->ValidationMessages = null;
-        $this->ResponseMessage->Result = null;
+        $this->Response = new \ stdClass();;
+        $this->Response->ValidationMessages = null;
+        $this->Response->Result = null;
         
         switch ($RequestMethod) {
             case 'GET':
@@ -49,9 +49,9 @@ class APIBase {
     function Get($requestObject){
         echo json_encode($this->ResponseMessage);
     }
-    function Response($responseCode){
+    function SendResponse($responseCode){
         http_response_code($responseCode);
-        echo json_encode($this->ResponseMessage);
+        echo json_encode($this->Response);
         die();
     }
 }

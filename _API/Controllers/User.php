@@ -29,7 +29,6 @@ class User extends API\APIBase{
         $result = $repository->Save($UserName, $ReturnKey);
 
         if($result != null){
-            
             echo $result;
         }else{
             echo "['Fail to insert user']";
