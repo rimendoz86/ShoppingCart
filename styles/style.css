@@ -157,7 +157,8 @@ input, select, textarea {
     -webkit-user-select: none; 
     -moz-user-select: none;
     -khtml-user-select: none; 
-    -ms-user-select: none; 
+    -ms-user-select: none;
+    white-space: nowrap;
 }
 
 .btn.btn-primary{
