@@ -3,8 +3,8 @@ namespace Data;
 
 class Connection {
     public $Servername = "localhost";
-    public $Username = "root";
-    public $Password = "";
+    public $Username = "shoppingcart";
+    public $Password = "pass123";
     public $Database = "shoppingcart";
     public $Port = 3306;
     public $Conn;
