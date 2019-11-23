@@ -19,7 +19,11 @@ class APIBase {
         switch ($RequestMethod) {
             case 'GET':
                 $RequestObject = (object) $_GET;
-                $this->Get($RequestObject);
+                if($RequestObject = "{}"){
+                    $this->Get();
+                }else{
+                    $this->GetWith($RequestObject);
+                }
                 break;
             case 'POST':
                 $RequestObject = json_decode(file_get_contents('php://input'));
@@ -46,7 +50,10 @@ class APIBase {
     function Delete($requestObject){
         echo json_encode($this->Response);
     }
-    function Get($requestObject){
+    function Get(){
+    }
+
+    function GetWith($requestObject){
         echo json_encode($this->Response);
     }
     function SendResponse($responseCode){

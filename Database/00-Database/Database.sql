@@ -1,1 +1,1 @@
-CREATE DATABASE ShoppingCart;
+CREATE DATABASE shoppingcart;

@@ -20,12 +20,12 @@ function SelectedProduct(quantity, productModel){
     this.Product = productModel;
 }
 
-function Cart(selectedProducts = [], shipping = 0, customerName = '', customerEmail = '', customerAddress = ''){
+function Cart(selectedProducts = [], shipping = Picklists.ShippingTypes[0], customerName = '', customerEmail = '', customerAddress = ''){
     this.CustomerName = customerName;
     this.CustomerEmail = customerEmail;
     this.CustomerAddress = customerAddress;
     this.SelectedProducts = selectedProducts;
-    this.Shipping = Picklists.ShippingTypes[shipping.ID];
+    this.Shipping = shipping;
     this.getSubtotal = () => {
         let runningTotal = 0;
         this.SelectedProducts.forEach( prod => {
@@ -132,7 +132,12 @@ var Data = {
             req.onreadystatechange = (event) => {
                 let res = event.currentTarget;
                 if(res.readyState == 4 && res.status == 200){
-                    resolve(JSON.parse(res.responseText));
+                    try{
+                        resolve(JSON.parse(res.responseText));
+                    }catch(err){
+                        console.log(res.responseText);
+                        reject(err);
+                    }
                 }else if (res.readyState == 4 && res.status != 200){
                     reject(event);
                 }

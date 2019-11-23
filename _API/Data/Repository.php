@@ -43,4 +43,62 @@ class User extends Data\Connection{
         return $this->Conn->insert_id;
     } 
 }
+
+class Order extends Data\Connection{
+    function Submit($order){
+        $sqlOrder = "
+        INSERT INTO `entity_order`
+        (
+            UserID, 
+            CustomerAddress, 
+            CustomerName, 
+            ShippingType, 
+            ShippingCost, 
+            SubTotal, 
+            Tax, 
+            Total
+        )
+        Values
+        (
+            $order->UserID, 
+            '$order->CustomerAddress', 
+            '$order->CustomerName', 
+            '$order->ShippingType', 
+            $order->ShippingCost, 
+            $order->SubTotal, 
+            $order->Tax, 
+            $order->Total
+        )";
+        $orderID = $this->dbInsert($sqlOrder);
+
+        foreach ($order->ProductList as $prod) {
+            $sqlOrderProduct = "
+            INSERT INTO xref_order_product
+                (
+                    order_ID,
+                    product_ID,
+                    product_price,
+                    product_quantity) 
+                Values
+                (   
+                    $orderID,
+                    $prod->product_ID,
+                    $prod->product_price, 
+                    $prod->product_quantity)
+                    ";
+                $this->dbInsert($sqlOrderProduct);
+        }       
+        return $orderID;
+    }
+    
+    function dbInsert($SQLCommand){
+        $stmt = $this->Conn->prepare($SQLCommand);   
+        if($stmt == false){
+            die(json_encode($this->Conn->error_list));
+        }
+        $stmt->execute();
+        $stmt->close();
+        return $this->Conn->insert_id;
+    }
+}
 ?>

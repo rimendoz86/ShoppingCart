@@ -89,10 +89,6 @@ controllerClass.prototype.orderformUpdate = function(event) {
 
 }
 
-controllerClass.prototype.SubmitOrder = function(){
-    console.log(this.Model.ShoppingCart)
-}
-
 controllerClass.prototype.Login = function(){
     Data.Post("Login",this.Model.Authentication)
     .then((res) => {
@@ -114,9 +110,56 @@ controllerClass.prototype.Login = function(){
         <span class="btn btn-light" onclick="GlobalControllerRef.LogOut()">Log Out</span>`);   
     });
 }
+
 controllerClass.prototype.LogOut = function(){
     this.Model.Authentication.UserID = null;
     GlobalViewRef.Welcome.SetInnerHTML('');  
     GlobalViewRef.LoginForm.Show(true);  
     bindingClass.ModelToForm(this.Model.Authentication, 'loginForm'); 
+}
+
+controllerClass.prototype.SubmitOrder = function(){
+    if(this.Model.Authentication.UserID == null){
+    alert("You must be logged on to place an order");
+    return;
+    }
+
+    if(this.Model.ShoppingCart.SelectedProducts.length == 0){
+        alert("Your cart is empty");
+    }
+
+    let orderRef = this.Model.ShoppingCart;
+
+    let selectedProducts = []
+    orderRef.SelectedProducts.forEach(
+        (selectedProd) => {
+            let prod = selectedProd.Product;
+            selectedProducts.push({
+                product_quantity: selectedProd.Quantity,
+                product_price: prod.Price,
+                product_ID: prod.ID
+        });
+    });
+
+    let orderSubmit = {
+        UserID: this.Model.Authentication.UserID,
+        CustomerAddress: orderRef.CustomerAddress,
+        CustomerName: orderRef.CustomerName,
+        ShippingType: orderRef.Shipping.Type,
+        ShippingCost: orderRef.Shipping.Price,
+        SubTotal: orderRef.getSubtotal(),
+        Tax: orderRef.getTax(),
+        Total: orderRef.getTotal(),
+        ProductList: selectedProducts
+    }
+
+    Data.Post('Order',orderSubmit).then((res) => {
+        if(res.ValidationMessages.length > 0) {
+            alert(res.ValidationMessages[0]);
+            return;
+        }
+        this.EmptyCart();
+        alert(`Thank you for your order, your order confirmation is ${res.Result} `);
+        
+    });
 }
