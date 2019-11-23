@@ -96,12 +96,27 @@ controllerClass.prototype.SubmitOrder = function(){
 controllerClass.prototype.Login = function(){
     Data.Post("Login",this.Model.Authentication)
     .then((res) => {
-        if(res.ValidationMessages.length == 0) {
-            this.Model.Authentication = new Authentication(res.Result[0]);
-            bindingClass.ModelToForm(this.Model.Authentication, 'loginForm');
-        }else {
-            console.log(res)
+        if(res.ValidationMessages.length > 0) {
+            alert(res.ValidationMessages[0]);
+            return;
         }
-        
+        if(res.Result.length == 0){
+            alert("Username/Password Combination not found.");
+            return;
+        }
+        let loginModel = res.Result[0];
+        Object.assign(this.Model.Authentication, loginModel);
+
+        bindingClass.ModelToForm(this.Model.Authentication, 'loginForm'); 
+        GlobalViewRef.LoginForm.Show(false);  
+        GlobalViewRef.Welcome.SetInnerHTML(`
+        <span>Welcome, ${loginModel.Login}</span>
+        <span class="btn btn-light" onclick="GlobalControllerRef.LogOut()">Log Out</span>`);   
     });
+}
+controllerClass.prototype.LogOut = function(){
+    this.Model.Authentication.UserID = null;
+    GlobalViewRef.Welcome.SetInnerHTML('');  
+    GlobalViewRef.LoginForm.Show(true);  
+    bindingClass.ModelToForm(this.Model.Authentication, 'loginForm'); 
 }

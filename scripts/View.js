@@ -5,6 +5,8 @@ function viewClass() {
     this.OrderButton = new DomRef('orderButtonContainer');
     this.PricingTable = new DomRef('pricingTable')
     this.OrderFormContainer = new DomRef('orderFormContainer');
+    this.LoginForm = new DomRef('loginForm');
+    this.Welcome = new DomRef('welcome');
 };
 
 viewClass.prototype.PopulateProductsTable = function (modelProducts) {

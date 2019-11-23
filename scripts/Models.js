@@ -153,8 +153,8 @@ var Data = {
                     try{
                         resolve(JSON.parse(res.responseText));
                     }catch(err){
-                        console.log(err);
-                        reject(res.responseText)
+                        console.log(res.responseText);
+                        reject(err);
                     }
                 }else if (res.readyState == 4 && res.status != 200){
                     reject(event);

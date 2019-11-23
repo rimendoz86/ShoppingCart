@@ -9,7 +9,7 @@ class Login extends API\APIBase{
     function Post($authModel){
         //var_dump($authModel);
         //Validation: Ensure request has required params
-        if($authModel->Login == "" || $authModel->Password == ""){
+        if(empty($authModel->Login) || empty($authModel->Password)){
             array_push($this->Response->ValidationMessages,"Login AND Password are required");
             $this->SendResponse(200);
         }
