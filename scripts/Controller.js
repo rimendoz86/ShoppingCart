@@ -25,6 +25,14 @@ controllerClass.prototype.InitializeShoppingCart = function(){
     }
 }
 
+controllerClass.prototype.UpdateShipping = function(ShipingID){
+    let shipping = Picklists.ShippingTypes[ShipingID];
+    if (shipping) {
+        this.Model.ShoppingCart.Shipping = shipping;
+        this.PopulatePricingTable();
+    }
+}
+
 controllerClass.prototype.PopulateProductsTable = function () {
     this.Model.Products = [];
     Data.Get("Product").then((res) => {
@@ -68,25 +76,8 @@ controllerClass.prototype.AddItemToCart = function (productID, increment){
 controllerClass.prototype.EmptyCart = function () {
     this.Model.ShoppingCart = new Cart();
     LocalStorage.ShoppingCart.clear();
+    GlobalViewRef.OrderForm.Reset();
     this.PopulateShoppingCartTable();
-}
-
-controllerClass.prototype.UpdateShipping = function(event){
-    let shipping = Picklists.ShippingTypes[event.target.value];
-    if (shipping) {
-        this.Model.ShoppingCart.Shipping = shipping;
-        this.PopulatePricingTable();
-    }
-}
-
-controllerClass.prototype.orderformUpdate = function(event) {
-    if (event.target.id == "orderShipping"){
-        this.UpdateShipping(event);
-    }else{
-        this.Model.ShoppingCart[event.target.id] = event.target.value;
-    }
-    LocalStorage.ShoppingCart.set(this.Model.ShoppingCart);
-
 }
 
 controllerClass.prototype.Login = function(){
@@ -155,11 +146,11 @@ controllerClass.prototype.SubmitOrder = function(){
 
     Data.Post('Order',orderSubmit).then((res) => {
         if(res.ValidationMessages.length > 0) {
-            alert(res.ValidationMessages[0]);
+            alert(res.ValidationMessages);
             return;
         }
         this.EmptyCart();
-        alert(`Thank you for your order, your order confirmation is ${res.Result} `);
+        alert(`Thank you for your order, your order confirmation # is ${res.Result} `);
         
     });
 }

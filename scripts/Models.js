@@ -25,6 +25,7 @@ function Cart(selectedProducts = [], shipping = Picklists.ShippingTypes[0], cust
     this.CustomerEmail = customerEmail;
     this.CustomerAddress = customerAddress;
     this.SelectedProducts = selectedProducts;
+    this.orderShipping = 0;
     this.Shipping = shipping;
     this.getSubtotal = () => {
         let runningTotal = 0;
@@ -88,6 +89,12 @@ function DomRef(id){
     this.AppendChild = function(htmlNode){
         this.nativeElementRef.appendChild(htmlNode);
     }
+
+    this.Reset = function(){
+        this.nativeElementRef.reset();
+    }
+
+
 
     this.Show = function (isShow) {
         if (isShow) {

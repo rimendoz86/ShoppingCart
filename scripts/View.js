@@ -5,6 +5,7 @@ function viewClass() {
     this.OrderButton = new DomRef('orderButtonContainer');
     this.PricingTable = new DomRef('pricingTable')
     this.OrderFormContainer = new DomRef('orderFormContainer');
+    this.OrderForm = new DomRef('orderForm');
     this.LoginForm = new DomRef('loginForm');
     this.Welcome = new DomRef('welcome');
 };

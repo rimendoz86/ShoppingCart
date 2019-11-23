@@ -14,16 +14,38 @@ class Order extends API\APIBase{
              $this->SendResponse(200);
          }
 
-         if(empty($req->CustomerAddress) 
-         || empty($req->CustomerName) 
-         || empty($req->ShippingType)
-         || empty($req->ShippingCost)
-         || empty($req->SubTotal)
-         || empty($req->Tax)
-         || empty($req->Total)){
-            array_push($this->Response->ValidationMessages,"Order is missing required information.");
+        if(empty($req->CustomerAddress)) {
+            array_push($this->Response->ValidationMessages,"CustomerAddress is Required.");
+        }
+
+        if(empty($req->CustomerName)) { 
+            array_push($this->Response->ValidationMessages,"CustomerName is Required.");
+        }
+        
+        if(empty($req->ShippingType)) { 
+            array_push($this->Response->ValidationMessages,"ShippingType is Required.");
+        }
+
+        if(!isset($req->ShippingCost)) { 
+            array_push($this->Response->ValidationMessages,"ShippingCost is Required.");
+        }
+
+        if(empty($req->SubTotal)) { 
+            array_push($this->Response->ValidationMessages,"SubTotal is Required.");
+        }
+
+        if( empty($req->Tax)) {
+            array_push($this->Response->ValidationMessages,"Tax is Required.");
+        }
+
+        if(empty($req->Total) ) {
+            array_push($this->Response->ValidationMessages,"Total is Required.");
+        }
+
+        if (count($this->Response->ValidationMessages)){
             $this->SendResponse(200);
-         }
+        }
+         
         //Logic: call to method in data layer. map to response
         $repository = new Repository\Order();
         $this->Response->Result = $repository->Submit($req);

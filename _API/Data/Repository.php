@@ -90,15 +90,5 @@ class Order extends Data\Connection{
         }       
         return $orderID;
     }
-    
-    function dbInsert($SQLCommand){
-        $stmt = $this->Conn->prepare($SQLCommand);   
-        if($stmt == false){
-            die(json_encode($this->Conn->error_list));
-        }
-        $stmt->execute();
-        $stmt->close();
-        return $this->Conn->insert_id;
-    }
 }
 ?>
