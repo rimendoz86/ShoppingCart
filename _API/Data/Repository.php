@@ -12,6 +12,18 @@ class Product extends Data\Connection{
     }
 }
 
+class Login extends Data\Connection{
+    function CheckLogin($authModel){
+        //var_dump($authModel);
+        return $this->dbSelect("
+        Select UserID, Login, 'Valid' as Password
+        FROM User
+        Where Login = '$authModel->Login' 
+        && Password = '$authModel->Password' 
+        && IsActive = 1");
+    }
+}
+
 class User extends Data\Connection{
     function Save($userName, $returnKey){
         $stmt = $this->Conn->prepare(
@@ -30,10 +42,5 @@ class User extends Data\Connection{
         $stmt->close();
         return $this->Conn->insert_id;
     } 
-
-    function Get(){
-        // return "[{'id':'0', 'name':'Superman','Score':'1000'}]";
-    }
-
 }
 ?>

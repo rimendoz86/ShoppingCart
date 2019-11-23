@@ -92,3 +92,16 @@ controllerClass.prototype.orderformUpdate = function(event) {
 controllerClass.prototype.SubmitOrder = function(){
     console.log(this.Model.ShoppingCart)
 }
+
+controllerClass.prototype.Login = function(){
+    Data.Post("Login",this.Model.Authentication)
+    .then((res) => {
+        if(res.ValidationMessages.length == 0) {
+            this.Model.Authentication = new Authentication(res.Result[0]);
+            bindingClass.ModelToForm(this.Model.Authentication, 'loginForm');
+        }else {
+            console.log(res)
+        }
+        
+    });
+}

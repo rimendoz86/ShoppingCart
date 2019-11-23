@@ -13,7 +13,7 @@ class APIBase {
         $RequestObject;
 
         $this->Response = new \ stdClass();;
-        $this->Response->ValidationMessages = null;
+        $this->Response->ValidationMessages = [];
         $this->Response->Result = null;
         
         switch ($RequestMethod) {
@@ -22,14 +22,14 @@ class APIBase {
                 $this->Get($RequestObject);
                 break;
             case 'POST':
-                $RequestObject = json_decode(file_get_contents('php://input'), true);
+                $RequestObject = json_decode(file_get_contents('php://input'));
                 $this->Post($RequestObject);
                 break;
             case 'PUT':
-                $RequestObject = json_decode(file_get_contents('php://input'), true);
+                $RequestObject = json_decode(file_get_contents('php://input'));
                 $this->Put($RequestObject);
             case 'DELETE':
-                $RequestObject = json_decode(file_get_contents('php://input'), true);
+                $RequestObject = json_decode(file_get_contents('php://input'));
                 $this->Delete($RequestObject);
             break;
             default:
@@ -38,16 +38,16 @@ class APIBase {
     }
 
     function Post($requestObject){
-        echo json_encode($this->ResponseMessage);
+        echo json_encode($this->Response);
     }
     function Put($requestObject){
-        echo json_encode($this->ResponseMessage);
+        echo json_encode($this->Response);
     }
     function Delete($requestObject){
-        echo json_encode($this->ResponseMessage);
+        echo json_encode($this->Response);
     }
     function Get($requestObject){
-        echo json_encode($this->ResponseMessage);
+        echo json_encode($this->Response);
     }
     function SendResponse($responseCode){
         http_response_code($responseCode);

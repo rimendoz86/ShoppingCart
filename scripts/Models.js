@@ -7,6 +7,9 @@ function Product(id, name, description, imageRef, price) {
     this.Price = price;
 }
 class Authentication {
+    constructor(initializer = {}){
+        Object.assign(this, initializer);
+    }
     UserID;
     Login;
     Password;
@@ -147,7 +150,12 @@ var Data = {
             req.onreadystatechange = (event) => {
                 let res = event.currentTarget;
                 if(res.readyState == 4 && res.status == 200){
-                    resolve(JSON.parse(res.responseText));
+                    try{
+                        resolve(JSON.parse(res.responseText));
+                    }catch(err){
+                        console.log(err);
+                        reject(res.responseText)
+                    }
                 }else if (res.readyState == 4 && res.status != 200){
                     reject(event);
                 }

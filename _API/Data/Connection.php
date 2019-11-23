@@ -21,6 +21,7 @@ class Connection {
     function StmtToList($stmt){
         $results = [];
         $res = $stmt->get_result();
+        //var_dump($res);
         while ($model = $res->fetch_object()) {
             array_push($results, $model);
         };
