@@ -2,9 +2,9 @@ function bindingClass (controllerRef){
     this.ControllerRef = controllerRef;
     //this.RegisterOrderForm();
     
-    this.BindFormToModel(ModelRef.Authentication,'loginForm');
+    bindingClass.BindFormToModel(ModelRef.Authentication,'loginForm');
     
-    this.BindFormToModel(ModelRef.ShoppingCart,'orderForm', (model)=> {
+    bindingClass.BindFormToModel(ModelRef.ShoppingCart,'orderForm', (model)=> {
         let orderID = model.orderShipping ? model.orderShipping : 0;
         this.ControllerRef.UpdateShipping(orderID);
     },
@@ -14,7 +14,7 @@ function bindingClass (controllerRef){
     window.GlobalBindingRef = this;
 };
 
-bindingClass.prototype.BindFormToModel = function(objectRef,formID, onChange = (modelData) =>{ return; }, onSubmit = (modelData) =>{ console.log(modelData); return; },) 
+bindingClass.BindFormToModel = function(objectRef,formID, onChange = (modelData) =>{ return; }, onSubmit = (modelData) =>{ console.log(modelData); return; },) 
 {
     let formRef = new DomRef(formID);
 

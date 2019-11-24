@@ -74,7 +74,8 @@ controllerClass.prototype.AddItemToCart = function (productID, increment){
 }
 
 controllerClass.prototype.EmptyCart = function () {
-    Object.assign(this.Model.ShoppingCart, new Cart())
+    this.Model.ShoppingCart = new Cart()
+    bindingClass.BindFormToModel(ModelRef.ShoppingCart,'orderForm');
     LocalStorage.ShoppingCart.clear();
     GlobalViewRef.OrderForm.Reset();
     this.PopulateShoppingCartTable();
