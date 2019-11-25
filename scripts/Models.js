@@ -6,10 +6,11 @@ function Product(id, name, description, imageRef, price) {
     this.ImageRef = imageRef;
     this.Price = price;
 }
+
 function Authentication() {
-    this.UserID;
-    this.Login;
-    this.Password;
+    this.UserID = null;
+    this.Login = null;
+    this.Password = null;
 }
 
 function SelectedProduct(quantity, productModel){
@@ -179,11 +180,10 @@ function FormBinding(objectRef,formID, onChange = (modelData) =>{ return; }, onS
     this.ObjectRef = objectRef;
     this.FormID = formID;
     this.FormRef = new DomRef(formID);
-    this.OnChange = () => {};
-    this.OnSubmit = () => {};
+    this.OnChange = onChange;
+    this.OnSubmit = onSubmit;
 
-    this.BindFormToModel = function(objectRef,formID, onChange = (modelData) =>{ return; }, onSubmit = (modelData) =>{ console.log(modelData); return; }) {
-
+    this.BindFormToModel = function() {
     this.FormRef.nativeElementRef.addEventListener("keyup", (event) => {
         if(this.FormToModel(this.ObjectRef,this.FormID)) 
         this.OnChange(this.ObjectRef);
@@ -202,7 +202,7 @@ function FormBinding(objectRef,formID, onChange = (modelData) =>{ return; }, onS
     });
     }
 
-    this.ModelToForm = function (objectRef, formID) {
+    this.ModelToForm = function (objectRef = this.ObjectRef, formID = this.FormID) {
     let objKeys = Object.keys(objectRef);
     let formRef = document.getElementById(formID);
     let changeFound = false;
@@ -216,7 +216,7 @@ function FormBinding(objectRef,formID, onChange = (modelData) =>{ return; }, onS
         return changeFound;
     };
 
-    this.FormToModel = function (objectRef, formID){
+    this.FormToModel = function (objectRef = this.ObjectRef, formID = this.FormID){
         let objKeys = Object.keys(objectRef);
         let formRef = document.getElementById(formID);
         let changeFound = false;
@@ -229,4 +229,5 @@ function FormBinding(objectRef,formID, onChange = (modelData) =>{ return; }, onS
             });
             return changeFound;
     };
+    this.BindFormToModel();
 }

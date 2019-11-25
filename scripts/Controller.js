@@ -5,6 +5,18 @@ function controllerClass (){
     this.PopulateProductsTable();
     this.PopulateShoppingCartTable();
     this.PopulatePricingTable();
+
+        
+    this.LoginForm = new FormBinding(ModelRef.Authentication,'loginForm');
+    
+    this.OrderForm = new FormBinding(ModelRef.ShoppingCart,'orderForm', (model)=> {
+        let orderID = model.orderShipping ? model.orderShipping : 0;
+        this.UpdateShipping(orderID);
+        LocalStorage.ShoppingCart.set(ModelRef.ShoppingCart);
+    },
+    () => {
+        this.SubmitOrder();
+    })
 }
 
 controllerClass.prototype.InitializeShoppingCart = function(){
@@ -75,7 +87,7 @@ controllerClass.prototype.AddItemToCart = function (productID, increment){
 
 controllerClass.prototype.EmptyCart = function () {
     this.Model.ShoppingCart = new Cart()
-    bindingClass.BindFormToModel(ModelRef.ShoppingCart,'orderForm');
+    this.OrderForm.ObjectRef = this.Model.ShoppingCart;
     LocalStorage.ShoppingCart.clear();
     GlobalViewRef.OrderForm.Reset();
     this.PopulateShoppingCartTable();
@@ -95,7 +107,7 @@ controllerClass.prototype.Login = function(){
         let loginModel = res.Result[0];
         Object.assign(this.Model.Authentication, loginModel);
 
-        bindingClass.ModelToForm(this.Model.Authentication, 'loginForm'); 
+        this.LoginForm.ModelToForm(this.Model.Authentication, 'loginForm'); 
         GlobalViewRef.LoginForm.Show(false);  
         GlobalViewRef.Welcome.SetInnerHTML(`
         <span>Welcome, ${loginModel.Login}</span>
