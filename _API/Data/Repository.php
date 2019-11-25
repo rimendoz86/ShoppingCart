@@ -19,7 +19,7 @@ class Login extends Data\Connection{
         Select UserID, Login, Password
         FROM User
         Where Login = '$authModel->Login' 
-        && Password = '$authModel->Password' 
+        && Password =  BINARY '$authModel->Password' 
         && IsActive = 1");
     }
 }
@@ -85,7 +85,7 @@ class Order extends Data\Connection{
                     $prod->product_ID,
                     $prod->product_price, 
                     $prod->product_quantity)
-                    ";
+                ";
                 $this->dbInsert($sqlOrderProduct);
         }       
         return $orderID;

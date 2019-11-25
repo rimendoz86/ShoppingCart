@@ -132,7 +132,12 @@ controllerClass.prototype.SubmitOrder = function(){
         alert("Your cart is empty");
     }
 
+    let rejectMessages = []; 
+
     let orderRef = this.Model.ShoppingCart;
+
+    if(!orderRef.CustomerEmail.IsType(RegexType.Email,'i'))
+        rejectMessages.push("Email is Invalid");
 
     let selectedProducts = []
     orderRef.SelectedProducts.forEach(

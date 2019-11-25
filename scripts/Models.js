@@ -41,20 +41,6 @@ function Cart(selectedProducts = [], shipping = Picklists.ShippingTypes[0], cust
     }
 }
 
-function TimerAction(action = () => {return}, runEvery = 5, runMax = 15){
-    this.Action = action;
-    this.RunEvery = runEvery;
-    this.RunMax = runMax;
-    this.Iteration = 0;
-    this.Dispose = false;
-}
-
-function KeyBind(keyCode = '', keyDown = () => { return }, keyUp = () => { return }){
-    this.KeyCode = keyCode;
-    this.KeyDown = keyDown;
-    this.KeyUp = keyUp;
-}
-
 function DomRef(id){
     this.nativeElementRef = document.getElementById(id);
 
@@ -92,8 +78,6 @@ function DomRef(id){
         this.nativeElementRef.reset();
     }
 
-
-
     this.Show = function (isShow) {
         if (isShow) {
             this.ReplaceClass("hide", null);
@@ -124,6 +108,26 @@ var Picklists = {
         {ID: 1, Type:"2-Day", Price: 5.99},
         {ID: 2, Type:"Overnight", Price: 10.99}
     ]
+}
+
+var RegexType = {
+    Username: `^[a-z0-9_-]{3,15}$`,
+    Password: `((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})`,
+    Hexadecimal: `^#([\iA-Fa-f0-9]{6}|[\iA-Fa-f0-9]{3})$`,
+    Email: `^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$`,
+    Image: `([^\\s]+(\\.(jpg|png|gif|bmp))$)`,
+    IP: `^([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])$`,
+    Time: `(1[012]|[1-9]):[0-5][0-9](\\\\s)?(am|pm)`,
+    Time24: `([01]?[0-9]|2[0-3]):[0-5][0-9]`,
+    DateFormat: `(0?[1-9]|[12][0-9]|3[01])\/(0?[1-9]|1[012])\/((19|20)\\d\\d)`,
+    HTML: `<("[^"]*"|'[^']*'|[^'">])*>`,
+    HTMLink: `<a([^>]+)>(.+?)<\/a>`
+};
+
+String.prototype.IsType = function(regex, modifier = null){
+let val = this.toString()
+var re = !modifier ? new RegExp(regex) : new RegExp(regex, modifier);
+return val.match(re) ? true: false;
 }
 
 var Data = {
@@ -186,7 +190,7 @@ function FormBinding(objectRef,formID, onChange = (modelData) =>{ return; }, onS
     this.BindFormToModel = function() {
     this.FormRef.nativeElementRef.addEventListener("keyup", (event) => {
         if(this.FormToModel(this.ObjectRef,this.FormID)) 
-        this.OnChange(this.ObjectRef);
+            this.OnChange(this.ObjectRef);
     });
 
     this.FormRef.nativeElementRef.addEventListener("change", (event) => {
