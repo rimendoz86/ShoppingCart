@@ -16,37 +16,42 @@
     <div class="container">
         <div class="row">
             <div class="col-100">
-                <nav class="nav nav-inline">
-                    <ul>
-                        <li>
-                            <a href="#">Fruit Central</a>
-                        </li>
-                    </ul>
-                    <ul class="navSectionRight">
-                        <form id="loginForm" class="horizontalForm">
+                <nav class="nav nav-inline row">
+                    <div class="col-62">
+                        <ul>
+                            <li>
+                                <a href="#">Fruit Central</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-37">
+                        <ul class="navSectionRight">
+                            <form id="loginForm" class="horizontalForm">
                                 <input type="test" name="Login" placeholder="Login" id="Login" autocomplete="login">
-                                <input type="password" name="Password" placeHolder="Password" id="Password" autocomplete="current-password">
+                                <input type="password" name="Password" placeHolder="Password" id="Password"
+                                    autocomplete="current-password">
                                 <span class="btn btn-light" onclick='GlobalControllerRef.Login()'>Login</span>
-                        </form>
-                        <li> 
-                            <span id="welcome"></span>
-                        </li>
-                    </ul>
+                            </form>
+                            <li>
+                                <span id="welcome"></span>
+                            </li>
+                        </ul>
+                    </div>
                 </nav>
             </div>
         </div>
         <div class="row" id="orderPage">
-            <div class="col-62">
+            <div class="col-62 overflow-auto">
                 <h3>Products</h3>
                 <table id="productsTable">
                 </table>
             </div>
             <div class="col-37">
                 <div class="row">
-                    <div class="col">
-                            <h3>Shopping Cart</h3>
-                            <table id="shoppingCartTable">
-                            </table>
+                    <div class="col overflow-auto">
+                        <h3>Shopping Cart</h3>
+                        <table id="shoppingCartTable">
+                        </table>
                     </div>
                 </div>
                 <div id="orderButtonContainer" class="row hide">
@@ -55,30 +60,30 @@
                     </div>
                 </div>
                 <div id="orderFormContainer" class="row">
-                        <div class="col">
-                            <h3>Order Details</h3>
-                            <table id="pricingTable">
-                            </table>
-                            <form id="orderForm">
-                                <input type="text" name="Name" placeholder="Name" id="CustomerName">
-                                <input type="email" name="Email" placeHolder="Email" id="CustomerEmail">
-                                <textarea name="address" placeholder="Full Address" id="CustomerAddress" cols="1" rows="4"></textarea>
-                                <select name="shipping" placeholder="Shipping" id="orderShipping">
-                                    <option value="0">No Rush (Free)</option>
-                                    <option value="1">2-Day (5.99)</option>
-                                    <option value="2">Overnight (10.99)</option>
-                                </select>
-                                <br>
-                                <input class="btn btn-primary float-right" type="submit" value="Order Now">
-                            </form>
-                        </div>
+                    <div class="col overflow-auto">
+                        <h3>Order Details</h3>
+                        <table id="pricingTable">
+                        </table>
+                        <form id="orderForm">
+                            <input type="text" name="Name" placeholder="Name" id="CustomerName">
+                            <input type="email" name="Email" placeHolder="Email" id="CustomerEmail">
+                            <textarea name="address" placeholder="Full Address" id="CustomerAddress" cols="1" rows="4"></textarea>
+                            <select name="shipping" placeholder="Shipping" id="orderShipping">
+                                <option value="0">No Rush (Free)</option>
+                                <option value="1">2-Day (5.99)</option>
+                                <option value="2">Overnight (10.99)</option>
+                            </select>
+                            <br>
+                            <input class="btn btn-primary float-right" type="submit" value="Order Now">
+                        </form>
                     </div>
+                </div>
             </div>
         </div>
         <div class="row footer">
             <div class="col-100">
                 <footer>
-                    &copy;2019 Ricardo Mendoza 
+                    &copy;2019 Ricardo Mendoza
                 </footer>
             </div>
         </div>
@@ -87,4 +92,3 @@
 <script src="scripts/App.js"></script>
 </html>
 
-    

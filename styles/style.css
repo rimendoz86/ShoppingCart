@@ -30,31 +30,6 @@ body, html{
     width: 100%;
 }
 
-@media only screen and (min-width: 800px) {
-    .col-100, .col{
-        width: 100%;
-    }
-    
-    .col-25{
-        width: 25%;
-    }
-    
-    .col-37{
-        width: 37.5%;
-    }
-    
-    .col-50{
-        width: 50%;
-    }
-    
-    .col-62{
-        width: 62.5%;
-    }
-    
-    .col-75{
-        width: 75%;
-    }
-  }
 .row.footer {
     width: 100%;
     padding: 10px 0px;
@@ -140,7 +115,7 @@ input, select, textarea {
     width: 100%;
     border: none;
     border-bottom: 1px solid lightGray;
-    padding: 5px;
+    padding: 10px;
     margin: 5px 1px;
     font-size: 16px;
 }
@@ -149,7 +124,8 @@ input, select, textarea {
     display: inline-block;
     background-color: #5a6268;
     color: white;
-    padding: 5px 8px;
+    font-size: large;
+    padding: 10px 12px;
     border-radius: 5px;
     cursor: pointer;
     margin: 5px;
@@ -187,3 +163,38 @@ input, select, textarea {
 .float-right{
     float:right;
 }
+
+.overflow-auto{
+    overflow:auto;
+}
+
+@media only screen and (min-width: 768px) {
+    .col-100, .col{
+        width: 100%;
+    }
+    
+    .col-25{
+        width: 25%;
+    }
+    
+    .col-37{
+        width: 37.5%;
+    }
+    
+    .col-50{
+        width: 50%;
+    }
+    
+    .col-62{
+        width: 62.5%;
+    }
+    
+    .col-75{
+        width: 75%;
+    }
+
+    .btn{
+        padding: 5px 8px;
+        font-size: medium;
+    }
+  }
