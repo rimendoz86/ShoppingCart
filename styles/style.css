@@ -25,34 +25,36 @@ body, html{
     position: relative;
 }
 
-.col-100, .col-25, .col-50, .col-75, .col {
+.col-100, .col-25, .col-37, .col-62 .col-50, .col-75, .col {
     display: inline-block;
-}
-
-.col-100, .col{
     width: 100%;
 }
 
-.col-25{
-    width: 25%;
-}
-
-.col-37{
-    width: 37.5%;
-}
-
-.col-50{
-    width: 50%;
-}
-
-.col-62{
-    width: 62.5%;
-}
-
-.col-75{
-    width: 75%;
-}
-
+@media only screen and (min-width: 800px) {
+    .col-100, .col{
+        width: 100%;
+    }
+    
+    .col-25{
+        width: 25%;
+    }
+    
+    .col-37{
+        width: 37.5%;
+    }
+    
+    .col-50{
+        width: 50%;
+    }
+    
+    .col-62{
+        width: 62.5%;
+    }
+    
+    .col-75{
+        width: 75%;
+    }
+  }
 .row.footer {
     width: 100%;
     padding: 10px 0px;

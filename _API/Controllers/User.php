@@ -6,16 +6,6 @@ use API;
 use Data\Repository;
 
 class User extends API\APIBase{
-    function Get($req){
-        //Validation: Ensure request has required params
-
-        //Logic: Map request to variables/object
-
-        //Data: Get/Save to Data Layer
-
-        //Response: echo response
-        echo '{"this": "is an example response from a PHP api"}';
-    }
 
     function Post($req){
         //Validation: Ensure request has required params
