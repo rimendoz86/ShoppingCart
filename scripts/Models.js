@@ -6,13 +6,10 @@ function Product(id, name, description, imageRef, price) {
     this.ImageRef = imageRef;
     this.Price = price;
 }
-class Authentication {
-    constructor(initializer = {}){
-        Object.assign(this, initializer);
-    }
-    UserID;
-    Login;
-    Password;
+function Authentication() {
+    this.UserID;
+    this.Login;
+    this.Password;
 }
 
 function SelectedProduct(quantity, productModel){
@@ -128,7 +125,6 @@ var Picklists = {
     ]
 }
 
-
 var Data = {
     Get: (controller, params = '') => {
         let promise = new Promise((resolve, reject) => {
@@ -177,4 +173,60 @@ var Data = {
         })
         return promise;
     }
+}
+
+function FormBinding(objectRef,formID, onChange = (modelData) =>{ return; }, onSubmit = (modelData) =>{ console.log(modelData); return; }) {
+    this.ObjectRef = objectRef;
+    this.FormID = formID;
+    this.FormRef = new DomRef(formID);
+    this.OnChange = () => {};
+    this.OnSubmit = () => {};
+
+    this.BindFormToModel = function(objectRef,formID, onChange = (modelData) =>{ return; }, onSubmit = (modelData) =>{ console.log(modelData); return; }) {
+
+    this.FormRef.nativeElementRef.addEventListener("keyup", (event) => {
+        if(this.FormToModel(this.ObjectRef,this.FormID)) 
+        this.OnChange(this.ObjectRef);
+    });
+
+    this.FormRef.nativeElementRef.addEventListener("change", (event) => {
+        if(this.FormToModel(this.ObjectRef,this.FormID))
+            this.OnChange(this.ObjectRef);
+    });
+
+    this.FormRef.nativeElementRef.addEventListener("submit", (event) => {
+        event.preventDefault();
+        if(this.FormToModel(this.ObjectRef,this.FormID))
+            this.OnChange(this.ObjectRef);
+        this.OnSubmit();
+    });
+    }
+
+    this.ModelToForm = function (objectRef, formID) {
+    let objKeys = Object.keys(objectRef);
+    let formRef = document.getElementById(formID);
+    let changeFound = false;
+    objKeys.forEach((key) => {
+        let formInput = formRef.elements[key];
+        if (formInput && formInput.value != objectRef[key]){
+          formInput.value = objectRef[key] ? objectRef[key] : '';
+          changeFound = true;
+        } 
+        });
+        return changeFound;
+    };
+
+    this.FormToModel = function (objectRef, formID){
+        let objKeys = Object.keys(objectRef);
+        let formRef = document.getElementById(formID);
+        let changeFound = false;
+        objKeys.forEach((key) => {
+            let formInput = formRef.elements[key];
+            if (formInput && formInput.value != objectRef[key]){
+                objectRef[key] = formInput.value ? formInput.value : '';
+                changeFound = true;
+            } 
+            });
+            return changeFound;
+    };
 }
