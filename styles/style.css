@@ -197,4 +197,7 @@ input, select, textarea {
         padding: 5px 8px;
         font-size: medium;
     }
+    input, select, textarea {
+        padding: 5px;
+    }
   }
