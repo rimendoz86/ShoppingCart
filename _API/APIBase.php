@@ -19,7 +19,7 @@ class APIBase {
         switch ($RequestMethod) {
             case 'GET':
                 $RequestObject = (object) $_GET;
-                if($RequestObject = "{}"){
+                if(!(array)$RequestObject){
                     $this->Get();
                 }else{
                     $this->GetWith($RequestObject);
@@ -32,10 +32,11 @@ class APIBase {
             case 'PUT':
                 $RequestObject = json_decode(file_get_contents('php://input'));
                 $this->Put($RequestObject);
+                break;
             case 'DELETE':
-                $RequestObject = json_decode(file_get_contents('php://input'));
-                $this->Delete($RequestObject);
-            break;
+                $RequestObject = (object) $_GET;
+                $this->Delete($RequestObject->id);
+                break;
             default:
                 break;
         }

@@ -7,7 +7,6 @@ use Data\Repository;
 
 class Login extends API\APIBase{
     function Post($authModel){
-        //var_dump($authModel);
         //Validation: Ensure request has required params
         if(empty($authModel->Login) || empty($authModel->Password)){
             array_push($this->Response->ValidationMessages,"Login AND Password are required");
@@ -15,9 +14,14 @@ class Login extends API\APIBase{
         }
         //Logic: call to method in data layer. map to response
         $repository = new Repository\Login();
-        $this->Response->Result = $repository->CheckLogin($authModel);
-
+        $result = $repository->CheckLogin($authModel);
+        if(empty($result)) 
+            array_push($this->Response->ValidationMessages,"UserName/Password Not FoundDB");
+        if(count($this->Response->ValidationMessages) > 0){
+            $this->SendResponse(200);
+        }
         //Response: return response
+        $this->Response->Result = $result;
         $this->SendResponse(200);
     }
 }

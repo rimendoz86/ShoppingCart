@@ -5,7 +5,7 @@ CREATE TABLE `entity_order` (
     CustomerAddress VARCHAR(200) NOT NULL,
     CustomerName VARCHAR(50) NOT NULL,
     ShippingType VARCHAR(50) NOT NULL,
-    ShippingCost INT NOT NULL,
+    ShippingCost FLOAT NOT NULL,
     SubTotal FLOAT NOT NULL,
     Tax FLOAT NOT NULL,
     Total FLOAT NOT NULL,

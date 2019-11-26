@@ -100,10 +100,7 @@ controllerClass.prototype.Login = function(){
             alert(res.ValidationMessages[0]);
             return;
         }
-        if(res.Result.length == 0){
-            alert("Username/Password Combination not found.");
-            return;
-        }
+
         let loginModel = res.Result[0];
         Object.assign(this.Model.Authentication, loginModel);
 
@@ -115,11 +112,29 @@ controllerClass.prototype.Login = function(){
     });
 }
 
+controllerClass.prototype.SignUp = function () {
+    Data.Post('User', this.Model.Authentication).then((res) =>{
+      if(res.ValidationMessages.length > 0) {
+        alert(res.ValidationMessages[0]);
+        return;
+      }
+
+      alert("Success, Please Login to Continue");
+    });
+  }
+
+controllerClass.prototype.UpdateUser = function(userModel) {
+    Data.Put('User',userModel).then((res) => {
+    console.log(res); 
+    });
+}
+
+
 controllerClass.prototype.LogOut = function(){
     this.Model.Authentication.UserID = null;
     GlobalViewRef.Welcome.SetInnerHTML('');  
     GlobalViewRef.LoginForm.Show(true);  
-    bindingClass.ModelToForm(this.Model.Authentication, 'loginForm'); 
+    this.LoginForm.ModelToForm(this.Model.Authentication, 'loginForm'); 
 }
 
 controllerClass.prototype.SubmitOrder = function(){

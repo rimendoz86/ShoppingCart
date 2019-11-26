@@ -38,6 +38,16 @@ class Connection {
         $stmt->close();
         return $res;
     }
+
+    function dbUpdate($SQLCommand){
+        $stmt = $this->Conn->prepare($SQLCommand);   
+        if($stmt == false){
+            die(json_encode($this->Conn->error_list));
+        }
+        $res = $stmt->execute();
+        $stmt->close();
+        return $res;
+    }
     
     function dbInsert($SQLCommand){
         $stmt = $this->Conn->prepare($SQLCommand);   

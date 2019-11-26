@@ -25,23 +25,52 @@ class Login extends Data\Connection{
 }
 
 class User extends Data\Connection{
-    function Save($userName, $returnKey){
-        $stmt = $this->Conn->prepare(
-        "INSERT INTO `users` 
-        (`ID`,`UserName`,`ReturnKey`,`CreatedOn`,`CreatedBy`,`UpdatedOn`,`UpdatedBy`)
-        VALUES 
-        (NULL, ?, ?, current_timestamp(),'TestUser', current_timestamp(),'TestUser');");
-        
-        if($stmt == false){
-            var_dump($this->Conn->error_list);
-            return "['Statement Failed']";
-            
-        }
-        $stmt->bind_param("ss", $userName, $returnKey);
-        $stmt->execute();
-        $stmt->close();
-        return $this->Conn->insert_id;
+    function CheckForUser($req){
+        $sql = "Select UserID
+        FROM user
+        WHERE Login = '$req->Login'";
+        return $this->dbSelect($sql);
     } 
+    
+    function Register($req){
+        $sql = "INSERT INTO user
+        (Login, Password)
+        Values
+        ('$req->Login','$req->Password')";
+        return $this->dbInsert($sql);
+    }
+
+    function GetAllUsers(){
+        $sql = "
+        SELECT UserID, Login, CreatedOn, IsAdmin, IsActive
+        FROM user";
+        return $this->dbSelect($sql);
+    }
+
+    function DeleteUser($id){
+        $sql = "UPDATE user SET IsActive = 0 where UserID = $id";
+        return $id;
+    }
+
+    function GetUser($id){
+        $sql = "
+        SELECT UserID, Login, CreatedOn, IsAdmin, IsActive
+        FROM user
+        WHERE UserID = $id";
+        return $this->dbSelect($sql);
+    }
+
+    function UpdateUser($req){
+        // die(json_encode($req));
+        $sql = "
+        UPDATE user SET
+        Login = '$req->Login'
+        WHERE UserID = $req->UserID";
+
+        $this->dbUpdate($sql);
+
+        return $this->GetUser($req->UserID);
+    }
 }
 
 class Order extends Data\Connection{

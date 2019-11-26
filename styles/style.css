@@ -63,6 +63,8 @@ body, html{
 .nav ul.navSectionRight{
     list-style-type:none;
     margin-left: auto;
+    display: flex;
+    justify-content: flex-end;
 }
 
 .nav-inline ul li{
