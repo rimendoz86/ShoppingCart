@@ -5,15 +5,16 @@ include_once '../Data/Repository.php';
 use API;
 use Data\Repository;
 
-class Test extends API\APIBase{
+class Test2 extends API\APIBase{
      function Get()
      {
-          $this->Response->Result = $_SESSION["Auth"];
+          $this->Response->Result = $this->Sess_Auth->get();
      }
 
      function GetWith($req)
      {
-          $_SESSION["Auth"] = $req;
+          $this->Sess_Auth->clear();
+          $this->Response->Result = $this->Sess_Auth->set($req);
      }
 } 
-new Test();
+new Test2();

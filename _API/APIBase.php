@@ -3,19 +3,17 @@ namespace API;
 if ( session_status() ===  PHP_SESSION_NONE) { 
     session_start();
 }
-header("Access-Control-Allow-Origin: *");
+include 'Models.php';
 header("Content-Type: application/json; charset=UTF-8");
 
 class APIBase {
+    public $Sess_Auth;
     public $Response;
     function __construct(){
+        $this->Sess_Auth = new Sess('Auth');
         $RequestMethod = $_SERVER['REQUEST_METHOD'];
-        $RequestObject;
+        $this->Response = new Response();
 
-        $this->Response = new \ stdClass();;
-        $this->Response->ValidationMessages = [];
-        $this->Response->Result = null;
-        
         switch ($RequestMethod) {
             case 'GET':
                 $RequestObject = (object) $_GET;
@@ -40,6 +38,7 @@ class APIBase {
             default:
                 break;
         }
+        $this->SendResponse(200);
     }
 
     function Post($requestObject){
@@ -52,15 +51,16 @@ class APIBase {
         echo json_encode($this->Response);
     }
     function Get(){
+        echo json_encode($this->Response);
     }
 
     function GetWith($requestObject){
         echo json_encode($this->Response);
     }
+
     function SendResponse($responseCode){
         http_response_code($responseCode);
-        echo json_encode($this->Response);
-        die();
+        die(json_encode($this->Response));
     }
 }
 ?>

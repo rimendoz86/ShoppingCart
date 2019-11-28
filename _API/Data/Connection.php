@@ -12,8 +12,7 @@ class Connection {
     function __construct() {
         $conn = new \ mysqli($this->Servername, $this->Username,$this->Password, $this->Database, $this->Port);
         if ($conn->connect_error) {
-            die("['Connection Failed',$conn->connect_error]");
-            return null;
+            die("{'SQLERROR':'$conn->connect_error'}");
         }
         $this->Conn = $conn;
     }
@@ -21,7 +20,6 @@ class Connection {
     function StmtToList($stmt){
         $results = [];
         $res = $stmt->get_result();
-        //var_dump($res);
         while ($model = $res->fetch_object()) {
             array_push($results, $model);
         };

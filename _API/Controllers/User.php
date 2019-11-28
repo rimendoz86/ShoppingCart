@@ -10,8 +10,6 @@ class User extends API\APIBase{
         $repository = new Repository\User();
 
         $this->Response->Result = $repository->GetAllUsers();
-
-        $this->SendResponse(200);
     }
 
     function GetWith($req) {
