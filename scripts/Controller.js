@@ -6,7 +6,6 @@ function controllerClass (){
     this.PopulateShoppingCartTable();
     this.PopulatePricingTable();
 
-        
     this.LoginForm = new FormBinding(ModelRef.Authentication,'loginForm');
     
     this.OrderForm = new FormBinding(ModelRef.ShoppingCart,'orderForm', (model)=> {
@@ -108,7 +107,9 @@ controllerClass.prototype.Login = function(){
         GlobalViewRef.LoginForm.Show(false);  
         GlobalViewRef.Welcome.SetInnerHTML(`
         <span>Welcome, ${loginModel.Login}</span>
-        <span class="btn btn-light" onclick="GlobalControllerRef.LogOut()">Log Out</span>`);   
+        <span class="btn btn-light" onclick="GlobalControllerRef.LogOut()">Log Out</span>`); 
+
+        this.GetUsers();  
     });
 }
 
@@ -129,20 +130,23 @@ controllerClass.prototype.UpdateUser = function(userModel) {
     });
 }
 
+controllerClass.prototype.GetUsers = function(){
+    Data.Get('User').then((res)=>{
+        this.Model.Users = res.Result;
+        GlobalViewRef.DisplayUsers(this.Model.Users);
+    });
+}
 
 controllerClass.prototype.LogOut = function(){
-    this.Model.Authentication.UserID = null;
+    Object.assign(this.Model.Authentication.UserID,new Authentication);
     GlobalViewRef.Welcome.SetInnerHTML('');  
     GlobalViewRef.LoginForm.Show(true);  
-    this.LoginForm.ModelToForm(this.Model.Authentication, 'loginForm'); 
+    this.LoginForm.ObjectRef = this.Model.Authentication;
+    this.LoginForm.ModelToForm(); 
+    this.GetUsers();  
 }
 
 controllerClass.prototype.SubmitOrder = function(){
-    if(this.Model.Authentication.UserID == null){
-    alert("You must be logged on to place an order");
-    return;
-    }
-
     if(this.Model.ShoppingCart.SelectedProducts.length == 0){
         alert("Your cart is empty");
     }

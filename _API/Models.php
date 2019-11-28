@@ -21,6 +21,6 @@ class Sess{
 
 class Response{
     public $ValidationMessages = [];
-    public $Result = null;
+    public $Result = [];
 }
 ?>

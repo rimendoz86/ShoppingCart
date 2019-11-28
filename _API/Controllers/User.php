@@ -7,8 +7,12 @@ use Data\Repository;
 class User extends API\APIBase{
 
     function Get(){
-        $repository = new Repository\User();
+        $user = $this->Sess_Auth->get();
+        if(!isset($user) || !$user->IsAdmin){
+            $this->SendResponse(200);
+        }
 
+        $repository = new Repository\User();
         $this->Response->Result = $repository->GetAllUsers();
     }
 
@@ -16,8 +20,6 @@ class User extends API\APIBase{
         $repository = new Repository\User();
 
         $this->Response->Result = $repository->GetUser($req->id);
-
-        $this->SendResponse(200);
     }
 
     function Post($req){

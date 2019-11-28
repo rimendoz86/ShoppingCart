@@ -8,6 +8,7 @@ function viewClass() {
     this.OrderForm = new DomRef('orderForm');
     this.LoginForm = new DomRef('loginForm');
     this.Welcome = new DomRef('welcome');
+    this.UserTable = new DomRef('userTable');
 };
 
 viewClass.prototype.PopulateProductsTable = function (modelProducts) {
@@ -26,6 +27,29 @@ viewClass.prototype.PopulateProductsTable = function (modelProducts) {
     });
     tableContent += "</tbody>"
     this.ProductsTable.SetInnerHTML(tableContent);
+}
+
+viewClass.prototype.DisplayUsers = function(users){
+    if(users.length == 0){
+        this.UserTable.SetInnerHTML('');
+        return; 
+    } 
+    let tableContent = `<thead><tr><th>UserID</th><th>Login</th><th>CreatedOn</th><th>IsAdmin</th><th>IsActive</th><th></th></tr></thead>
+                        <tbody>`;
+    users.forEach(user => {
+        tableContent += `
+        <tr>
+            <td><span class="btn btn-light">Edit</span></td>
+            <td>${user.UserID}</td>
+            <td>${user.Login}</td>
+            <td>${user.CreatedOn}</td>
+            <td>${user.IsAdmin}</td>
+            <td>${user.IsActive}</td>
+        </tr>
+        `
+    });
+    tableContent += "</tbody>"
+    this.UserTable.SetInnerHTML(tableContent);
 }
 
 viewClass.prototype.PopulateShoppingCartTable = function (cart) {
