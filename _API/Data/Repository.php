@@ -16,7 +16,7 @@ class Login extends Data\Connection{
     function CheckLogin($authModel){
         //var_dump($authModel);
         return $this->dbSelect("
-        Select UserID, Login, Password
+        Select UserID, Login, '' as Password, IsAdmin
         FROM User
         Where Login = '$authModel->Login' 
         && Password =  BINARY '$authModel->Password' 

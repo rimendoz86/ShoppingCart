@@ -9,6 +9,9 @@ class Order extends API\APIBase{
     function Post($req){
         //die(json_encode($req));
         //Validation: Ensure request has required params
+        $User = $this->Sess_Auth->get();
+        $req->UserID = $User->UserID;
+        
         if(empty($req->UserID)){
              array_push($this->Response->ValidationMessages,"User is not logged in");
              $this->SendResponse(200);

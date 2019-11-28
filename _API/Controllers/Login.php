@@ -20,6 +20,8 @@ class Login extends API\APIBase{
         if(count($this->Response->ValidationMessages) > 0){
             $this->SendResponse(200);
         }
+
+        $this->Sess_Auth->set($result[0]);
         //Response: return response
         $this->Response->Result = $result;
         $this->SendResponse(200);
