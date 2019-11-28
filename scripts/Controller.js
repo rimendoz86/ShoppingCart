@@ -141,9 +141,9 @@ controllerClass.prototype.LogOut = function(){
     Object.assign(this.Model.Authentication.UserID,new Authentication);
     GlobalViewRef.Welcome.SetInnerHTML('');  
     GlobalViewRef.LoginForm.Show(true);  
+    GlobalViewRef.DisplayUsers([]);
     this.LoginForm.ObjectRef = this.Model.Authentication;
     this.LoginForm.ModelToForm(); 
-    this.GetUsers();  
 }
 
 controllerClass.prototype.SubmitOrder = function(){
