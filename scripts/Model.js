@@ -4,5 +4,6 @@ function modelClass (){
     this.ShoppingCart = new Cart();
     this.Authentication = new Authentication();
     this.Users = [];
+    this.UserEdit = new Authentication();
     window.ModelRef = this;
 }

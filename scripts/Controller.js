@@ -16,6 +16,10 @@ function controllerClass (){
     () => {
         this.SubmitOrder();
     })
+
+    this.UserEditForm = new FormBinding(ModelRef.UserEdit, 'userEdit', ()=>{return}, () => {
+        this.Model.UserEdit;
+    })
 }
 
 controllerClass.prototype.InitializeShoppingCart = function(){
@@ -108,8 +112,8 @@ controllerClass.prototype.Login = function(){
         GlobalViewRef.Welcome.SetInnerHTML(`
         <span>Welcome, ${loginModel.Login}</span>
         <span class="btn btn-light" onclick="GlobalControllerRef.LogOut()">Log Out</span>`); 
-
-        this.GetUsers();  
+        GlobalViewRef.ShowAdmin(loginModel.IsAdmin);  
+        this.GetUsers(loginModel.IsAdmin);  
     });
 }
 
@@ -137,10 +141,17 @@ controllerClass.prototype.GetUsers = function(){
     });
 }
 
+controllerClass.prototype.SetEditUser = function(userID){
+    let user = this.Model.Users.filter( x => x.UserID = userID);
+    Object.assign(this.Model.UserEdit,user[0])
+    this.UserEditForm.ModelToForm();
+}
+
 controllerClass.prototype.LogOut = function(){
     Object.assign(this.Model.Authentication.UserID,new Authentication);
     GlobalViewRef.Welcome.SetInnerHTML('');  
-    GlobalViewRef.LoginForm.Show(true);  
+    GlobalViewRef.LoginForm.Show(true);
+    GlobalViewRef.ShowAdmin(false);  
     GlobalViewRef.DisplayUsers([]);
     this.LoginForm.ObjectRef = this.Model.Authentication;
     this.LoginForm.ModelToForm(); 

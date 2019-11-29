@@ -9,6 +9,7 @@ function viewClass() {
     this.LoginForm = new DomRef('loginForm');
     this.Welcome = new DomRef('welcome');
     this.UserTable = new DomRef('userTable');
+    this.Admin = new DomRef('admin');
 };
 
 viewClass.prototype.PopulateProductsTable = function (modelProducts) {
@@ -29,17 +30,21 @@ viewClass.prototype.PopulateProductsTable = function (modelProducts) {
     this.ProductsTable.SetInnerHTML(tableContent);
 }
 
+viewClass.prototype.ShowAdmin = function(isAdmin){
+    this.Admin.Show(isAdmin);
+};
+
 viewClass.prototype.DisplayUsers = function(users){
     if(users.length == 0){
         this.UserTable.SetInnerHTML('');
         return; 
     } 
-    let tableContent = `<thead><tr><th>UserID</th><th>Login</th><th>CreatedOn</th><th>IsAdmin</th><th>IsActive</th><th></th></tr></thead>
+    let tableContent = `<thead><tr><th></th><th>UserID</th><th>Login</th><th>CreatedOn</th><th>IsAdmin</th><th>IsActive</th></tr></thead>
                         <tbody>`;
     users.forEach(user => {
         tableContent += `
         <tr>
-            <td><span class="btn btn-light">Edit</span></td>
+            <td><span class="btn btn-light" onclick="GlobalControllerRef.SetEditUser(${user.UserID})">Edit</span></td>
             <td>${user.UserID}</td>
             <td>${user.Login}</td>
             <td>${user.CreatedOn}</td>

@@ -11,6 +11,8 @@ function Authentication() {
     this.UserID = null;
     this.Login = null;
     this.Password = null;
+    this.IsAdmin = null;
+    this.IsActive = null;
 }
 
 function SelectedProduct(quantity, productModel){

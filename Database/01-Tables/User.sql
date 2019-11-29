@@ -11,7 +11,7 @@ CREATE TABLE User (
     );
 
 INSERT INTO User 
-(UserID,Login, Password,IsAdmin)
+(UserID,Login, Password, IsAdmin)
 VALUES
 (1, "TestUser", "TestPass",0),
 (2, "TestAdmin", "TestPass",1);
