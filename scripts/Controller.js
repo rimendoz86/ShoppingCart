@@ -17,7 +17,7 @@ controllerClass.prototype.FormRegistration = function(){
     this.LoginForm = new FormBinding(ModelRef.Authentication,'loginForm');
     
     this.UserEditForm = new FormBinding(ModelRef.UserEdit, 'userEdit', 
-                                        ()=>{return}, 
+                                        ()=>{ return;}, 
                                         () => { this.UpdateUser(this.Model.UserEdit);});
 }
 
