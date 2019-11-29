@@ -10,6 +10,7 @@ function viewClass() {
     this.Welcome = new DomRef('welcome');
     this.UserTable = new DomRef('userTable');
     this.Admin = new DomRef('admin');
+    this.UserEdit = new DomRef('userEditContainer');
 };
 
 viewClass.prototype.PopulateProductsTable = function (modelProducts) {

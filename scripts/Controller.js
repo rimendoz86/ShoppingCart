@@ -5,21 +5,26 @@ function controllerClass (){
     this.PopulateProductsTable();
     this.PopulateShoppingCartTable();
     this.PopulatePricingTable();
+    this.FormRegistration();
+
+}
+
+controllerClass.prototype.FormRegistration = function(){
+    this.OrderForm = new FormBinding(ModelRef.ShoppingCart,'orderForm', 
+                                    (model)=> { this.OrderFormOnChange(model);},
+                                    () => { this.SubmitOrder();})
 
     this.LoginForm = new FormBinding(ModelRef.Authentication,'loginForm');
     
-    this.OrderForm = new FormBinding(ModelRef.ShoppingCart,'orderForm', (model)=> {
-        let orderID = model.orderShipping ? model.orderShipping : 0;
-        this.UpdateShipping(orderID);
-        LocalStorage.ShoppingCart.set(ModelRef.ShoppingCart);
-    },
-    () => {
-        this.SubmitOrder();
-    })
+    this.UserEditForm = new FormBinding(ModelRef.UserEdit, 'userEdit', 
+                                        ()=>{return}, 
+                                        () => { this.UpdateUser(this.Model.UserEdit);});
+}
 
-    this.UserEditForm = new FormBinding(ModelRef.UserEdit, 'userEdit', ()=>{return}, () => {
-        this.UpdateUser(this.Model.UserEdit);
-    })
+controllerClass.prototype.OrderFormOnChange = function(model){
+    let orderID = model.orderShipping ? model.orderShipping : 0;
+    this.UpdateShipping(orderID);
+    LocalStorage.ShoppingCart.set(ModelRef.ShoppingCart);
 }
 
 controllerClass.prototype.InitializeShoppingCart = function(){
@@ -78,7 +83,7 @@ controllerClass.prototype.AddItemToCart = function (productID, increment){
     if (alreadyInCart){
         alreadyInCart.Quantity += increment;
     }else{
-        let selectedProduct = this.Model.Products.find( x => x.ID == productID);
+        let selectedProduct = this.Model.Products.find(x => x.ID == productID);
         let newCartItem =  new SelectedProduct(1, selectedProduct);
         this.Model.ShoppingCart.SelectedProducts.push(newCartItem);
     }
@@ -130,7 +135,9 @@ controllerClass.prototype.SignUp = function () {
 
 controllerClass.prototype.UpdateUser = function(userModel) {
     Data.Put('User',userModel).then((res) => {
-    console.log(res); 
+        this.GetUsers();
+        Object.assign(this.Model.UserEdit, new Authentication());
+        this.UserEditForm.ModelToForm();
     });
 }
 
@@ -138,6 +145,7 @@ controllerClass.prototype.GetUsers = function(){
     Data.Get('User').then((res)=>{
         this.Model.Users = res.Result;
         GlobalViewRef.DisplayUsers(this.Model.Users);
+        GlobalViewRef.UserEdit.Show(false);
     });
 }
 
@@ -145,6 +153,7 @@ controllerClass.prototype.SetEditUser = function(userID){
     let user = this.Model.Users.filter( x => x.UserID == userID);
     Object.assign(this.Model.UserEdit,user[0])
     this.UserEditForm.ModelToForm();
+    GlobalViewRef.UserEdit.Show(true);
 }
 
 controllerClass.prototype.LogOut = function(){

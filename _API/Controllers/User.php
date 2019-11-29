@@ -23,7 +23,6 @@ class User extends API\APIBase{
     }
 
     function Post($req){
-        //var_dump($req);
         //Validation: Ensure request has required params
         if(empty($req->Login) || empty($req->Password)){
             array_push($this->Response->ValidationMessages,"Login AND Password are required");
@@ -41,21 +40,23 @@ class User extends API\APIBase{
         }
         //Response: return response
         $this->Response->Result = $repository->Register($req);
-        $this->SendResponse(200);
     }
 
     function Put($req){
-        $repository = new Repository\User();
+        $user = $this->Sess_Auth->get();
+        if(!isset($user) || !$user->IsAdmin){
+            array_push($this->ValidationMessages, "You don't have the rights to do this");
+            $this->SendResponse(200);
+        }
 
+        $repository = new Repository\User();
         $this->Response->Result = $results = $repository->UpdateUser($req);
-        $this->SendResponse(200);
     }
 
     function Delete($id){
         $repository = new Repository\User();
 
         $this->Response->Result = $repository->DeleteUser($id);
-        $this->SendResponse(200);
     }
 }
 new User();

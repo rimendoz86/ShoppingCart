@@ -13,7 +13,6 @@ class APIBase {
         $this->Sess_Auth = new Sess('Auth');
         $RequestMethod = $_SERVER['REQUEST_METHOD'];
         $this->Response = new Response();
-
         switch ($RequestMethod) {
             case 'GET':
                 $RequestObject = (object) $_GET;

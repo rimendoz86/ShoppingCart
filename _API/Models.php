@@ -6,9 +6,10 @@ class Sess{
         $this->VarName = $varName;
     }
     public function get(){
-        if(isset($_SESSION[$this->VarName])){
-            return json_decode($_SESSION[$this->VarName]);
+        if(!isset($_SESSION[$this->VarName])){
+            return;
         }
+        return json_decode($_SESSION[$this->VarName]);
     }
     public function set($auth){
         $_SESSION[$this->VarName] = json_encode($auth);
