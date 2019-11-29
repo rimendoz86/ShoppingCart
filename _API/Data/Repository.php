@@ -64,9 +64,11 @@ class User extends Data\Connection{
         // die(json_encode($req));
         $sql = "
         UPDATE user SET
-        Login = '$req->Login'
+        Login = '$req->Login',
+        IsAdmin = $req->IsAdmin,
+        IsActive = $req->IsActive
         WHERE UserID = $req->UserID";
-
+        
         $this->dbUpdate($sql);
 
         return $this->GetUser($req->UserID);

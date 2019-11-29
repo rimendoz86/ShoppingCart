@@ -18,7 +18,7 @@ function controllerClass (){
     })
 
     this.UserEditForm = new FormBinding(ModelRef.UserEdit, 'userEdit', ()=>{return}, () => {
-        this.Model.UserEdit;
+        this.UpdateUser(this.Model.UserEdit);
     })
 }
 
@@ -142,7 +142,7 @@ controllerClass.prototype.GetUsers = function(){
 }
 
 controllerClass.prototype.SetEditUser = function(userID){
-    let user = this.Model.Users.filter( x => x.UserID = userID);
+    let user = this.Model.Users.filter( x => x.UserID == userID);
     Object.assign(this.Model.UserEdit,user[0])
     this.UserEditForm.ModelToForm();
 }
