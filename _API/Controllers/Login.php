@@ -17,6 +17,7 @@ class Login extends API\APIBase{
         $result = $repository->CheckLogin($authModel);
         if(empty($result)) 
             array_push($this->Response->ValidationMessages,"UserName/Password Not FoundDB");
+            
         if(count($this->Response->ValidationMessages) > 0){
             $this->SendResponse(200);
         }

@@ -89,7 +89,7 @@
                         <h4>Users</h4>
                         <table id="userTable"></table>
                     </div>
-                    <div id="userEditContainer" class="col-50">
+                    <div id="userEditContainer" class="col-50 hide">
                         <h4>User Edit</h4>
                         <form id="userEdit">
                             <input type="text" readonly name="UserID" placeholder="UserID" id="UserID">
@@ -98,7 +98,7 @@
                             <input type="text" name="IsActive" placeholder="IsActive" id="IsActive">
 
                             <input type="submit" class="float-right btn btn-primary" value="Save">
-                            <input type="button" class="float-right btn btn-light" value="Cancel">
+                            <input type="button" class="float-right btn btn-light" onclick="GlobalControllerRef.ClearUser()" value="Cancel">
                         </form>
                     </div>
                 </div>

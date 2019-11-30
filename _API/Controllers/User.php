@@ -43,12 +43,30 @@ class User extends API\APIBase{
     }
 
     function Put($req){
+        // $this->Response->Result = $req;
+        // $this->SendResponse(200);
         $user = $this->Sess_Auth->get();
         if(!isset($user) || !$user->IsAdmin){
             array_push($this->ValidationMessages, "You don't have the rights to do this");
             $this->SendResponse(200);
         }
 
+        if(!isset($req->UserID))
+            array_push($this->Response->ValidationMessages, "UserID is Required.");
+
+        if (empty($req->Login))
+            array_push($this->Response->ValidationMessages, "Login is Required.");
+
+        if(!isset($req->IsAdmin))
+            array_push($this->Response->ValidationMessages, "IsAdmin is Required.");
+
+        if(!isset($req->IsActive))
+            array_push($this->Response->ValidationMessages, "IsActive is Required.");
+
+        if(count($this->Response->ValidationMessages) > 0){
+            $this->SendResponse(200);
+        }
+        
         $repository = new Repository\User();
         $this->Response->Result = $results = $repository->UpdateUser($req);
     }

@@ -226,8 +226,8 @@ function FormBinding(objectRef,formID, onChange = (modelData) =>{ return; }, onS
     let changeFound = false;
     objKeys.forEach((key) => {
         let formInput = formRef.elements[key];
-        if (formInput && formInput.value != objectRef[key]){
-          formInput.value = objectRef[key] ? objectRef[key] : '';
+        if (formInput && formInput.value !== objectRef[key]){
+          formInput.value = objectRef[key] != undefined ? objectRef[key].toString() : '';
           changeFound = true;
         } 
         });

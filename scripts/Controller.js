@@ -135,9 +135,14 @@ controllerClass.prototype.SignUp = function () {
 
 controllerClass.prototype.UpdateUser = function(userModel) {
     Data.Put('User',userModel).then((res) => {
+        if(res.ValidationMessages.length > 0) {
+            alert(res.ValidationMessages);
+            return;
+        }
         this.GetUsers();
         Object.assign(this.Model.UserEdit, new Authentication());
         this.UserEditForm.ModelToForm();
+        GlobalViewRef.UserEdit.Show(false);
     });
 }
 
@@ -145,7 +150,6 @@ controllerClass.prototype.GetUsers = function(){
     Data.Get('User').then((res)=>{
         this.Model.Users = res.Result;
         GlobalViewRef.DisplayUsers(this.Model.Users);
-        GlobalViewRef.UserEdit.Show(false);
     });
 }
 
@@ -155,6 +159,12 @@ controllerClass.prototype.SetEditUser = function(userID){
     this.UserEditForm.ModelToForm();
     GlobalViewRef.UserEdit.Show(true);
 }
+
+controllerClass.prototype.ClearUser = function(){
+    Object.assign(this.Model.UserEdit, new Authentication());
+    this.UserEditForm.ModelToForm();
+}
+
 
 controllerClass.prototype.LogOut = function(){
     Object.assign(this.Model.Authentication.UserID,new Authentication);

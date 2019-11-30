@@ -40,7 +40,7 @@ viewClass.prototype.DisplayUsers = function(users){
         this.UserTable.SetInnerHTML('');
         return; 
     } 
-    let tableContent = `<thead><tr><th></th><th>UserID</th><th>Login</th><th>CreatedOn</th><th>IsAdmin</th><th>IsActive</th></tr></thead>
+    let tableContent = `<thead><tr><th></th><th>UserID</th><th>Login</th><th>UpdatedOn</th><th>IsAdmin</th><th>IsActive</th></tr></thead>
                         <tbody>`;
     users.forEach(user => {
         tableContent += `

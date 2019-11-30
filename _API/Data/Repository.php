@@ -54,7 +54,7 @@ class User extends Data\Connection{
 
     function GetUser($id){
         $sql = "
-        SELECT UserID, Login, CreatedOn, IsAdmin, IsActive
+        SELECT UserID, Login, UpdatedOn, IsAdmin, IsActive
         FROM user
         WHERE UserID = $id";
         return $this->dbSelect($sql);
