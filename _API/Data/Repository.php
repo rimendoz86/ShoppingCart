@@ -8,19 +8,18 @@ class Product extends Data\Connection{
         return $this->dbSelect("
         Select ID, Name, Description, ImageRef, Price
         FROM Product
-        Where IsActive = 1");
+        Where IsActive = 1;");
     }
 }
 
 class Login extends Data\Connection{
     function CheckLogin($authModel){
-        //var_dump($authModel);
         return $this->dbSelect("
         Select UserID, Login, '' as Password, IsAdmin
         FROM User
         Where Login = '$authModel->Login' 
         && Password =  BINARY '$authModel->Password' 
-        && IsActive = 1");
+        && IsActive = 1;");
     }
 }
 
@@ -33,7 +32,7 @@ class User extends Data\Connection{
     } 
     
     function Register($req){
-        $sql = "INSERT INTO user
+        $sql = "INSERT INTO User
         (Login, Password)
         Values
         ('$req->Login','$req->Password')";
@@ -43,27 +42,26 @@ class User extends Data\Connection{
     function GetAllUsers(){
         $sql = "
         SELECT UserID, Login, CreatedOn, IsAdmin, IsActive
-        FROM user";
+        FROM User";
         return $this->dbSelect($sql);
     }
 
     function DeleteUser($id){
-        $sql = "UPDATE user SET IsActive = 0 where UserID = $id";
+        $sql = "UPDATE User SET IsActive = 0 where UserID = $id";
         return $id;
     }
 
     function GetUser($id){
         $sql = "
         SELECT UserID, Login, UpdatedOn, IsAdmin, IsActive
-        FROM user
+        FROM User
         WHERE UserID = $id";
         return $this->dbSelect($sql);
     }
 
     function UpdateUser($req){
-        // die(json_encode($req));
-        $sql = "
-        UPDATE user SET
+
+        $sql = "UPDATE User SET
         Login = '$req->Login',
         IsAdmin = $req->IsAdmin,
         IsActive = $req->IsActive
@@ -99,7 +97,7 @@ class Order extends Data\Connection{
             $order->SubTotal, 
             $order->Tax, 
             $order->Total
-        )";
+        );";
         $orderID = $this->dbInsert($sqlOrder);
 
         foreach ($order->ProductList as $prod) {
@@ -115,7 +113,7 @@ class Order extends Data\Connection{
                     $orderID,
                     $prod->product_ID,
                     $prod->product_price, 
-                    $prod->product_quantity)
+                    $prod->product_quantity);
                 ";
                 $this->dbInsert($sqlOrderProduct);
         }       

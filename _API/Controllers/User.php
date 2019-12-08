@@ -43,8 +43,7 @@ class User extends API\APIBase{
     }
 
     function Put($req){
-        // $this->Response->Result = $req;
-        // $this->SendResponse(200);
+
         $user = $this->Sess_Auth->get();
         if(!isset($user) || !$user->IsAdmin){
             array_push($this->ValidationMessages, "You don't have the rights to do this");
